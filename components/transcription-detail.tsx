@@ -3,8 +3,11 @@
 import { useState, useRef, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { formatDistanceToNow, format } from "date-fns"
 import { ProcessingStatus } from "@/components/ui/progressing-status"
+import { AlertTriangle, Shield, Loader2, AlertCircle } from "lucide-react"
 
 interface Word {
   text: string
@@ -34,6 +37,10 @@ interface TranscriptionJob {
   originalAudioFileName: string
   status: string
   transcriptionResultJson: TranscriptionResult | null
+  riskDetectionStatus: string
+  riskDetectionResult: string | null
+  riskDetectionResponse: string | null
+  riskAnalyzedAt: Date | null
   createdAt: Date
   updatedAt: Date
 }
@@ -45,6 +52,8 @@ interface TranscriptionDetailProps {
 export function TranscriptionDetail({ transcription }: TranscriptionDetailProps) {
   const [selectedSegmentId, setSelectedSegmentId] = useState<number | null>(null)
   const [activeWordIndex, setActiveWordIndex] = useState<{ segmentId: number; wordIndex: number } | null>(null)
+  const [isAnalyzingRisk, setIsAnalyzingRisk] = useState(false)
+  const [riskAnalysisError, setRiskAnalysisError] = useState<string | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
   const segmentRefs = useRef<Map<number, HTMLDivElement>>(new Map())
 
@@ -106,14 +115,339 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
     return `${(confidence * 100).toFixed(0)}%`
   }
 
+  // Parse Ollama response to extract Thinking, Summary, and Final Answer sections
+  const parseOllamaResponse = (response: string) => {
+    const sections = {
+      thinking: '',
+      summary: '',
+      finalAnswer: ''
+    }
+
+    // Extract Thinking section from <think>...</think> tags
+    const thinkTagMatch = response.match(/<think>([\s\S]*?)<\/think>/i)
+    if (thinkTagMatch) {
+      sections.thinking = thinkTagMatch[1].trim()
+      
+      // Extract the final answer after </think> tag
+      const afterThinkMatch = response.match(/<\/think>\s*([\s\S]*?)$/i)
+      if (afterThinkMatch) {
+        sections.finalAnswer = afterThinkMatch[1].trim()
+      }
+    } else {
+      // Fallback: Extract Thinking section (between "Thinking..." and "...done thinking.")
+      const thinkingMatch = response.match(/Thinking\.\.\.([\s\S]*?)\.\.\.done thinking\./i)
+      if (thinkingMatch) {
+        sections.thinking = thinkingMatch[1].trim()
+      }
+
+      // Extract Summary section - handle both **Summary:** and Summary: formats
+      const summaryMatch = response.match(/\*\*Summary:\*\*\s*([\s\S]*?)(?=\*\*Final Answer:\*\*|Final Answer:|$)/i) ||
+                          response.match(/Summary:\s*([\s\S]*?)(?=\*\*Final Answer:\*\*|Final Answer:|$)/i)
+      if (summaryMatch) {
+        sections.summary = summaryMatch[1].trim()
+      }
+
+      // Extract Final Answer - handle both **Final Answer:** and Final Answer: formats
+      const finalAnswerMatch = response.match(/\*\*Final Answer:\*\*\s*([\s\S]*?)$/i) ||
+                               response.match(/Final Answer:\s*([\s\S]*?)$/i)
+      if (finalAnswerMatch) {
+        let finalText = finalAnswerMatch[1].trim()
+        
+        // Check for boxed answer
+        const boxedMatch = finalText.match(/\\?boxed\s*\{\s*([^}]+)\s*\}/i)
+        if (boxedMatch) {
+          sections.finalAnswer = boxedMatch[1].trim()
+        } else {
+          sections.finalAnswer = finalText
+        }
+      }
+    }
+
+    return sections
+  }
+
+  // Handle risk detection with proper waiting for Ollama processing
+  const handleRiskDetection = async () => {
+    if (!transcription.transcriptionResultJson) {
+      setRiskAnalysisError('No transcription available for analysis')
+      return
+    }
+
+    setIsAnalyzingRisk(true)
+    setRiskAnalysisError(null)
+
+    try {
+      const fullText = transcription.transcriptionResultJson.text
+      
+      // Start the analysis
+      const response = await fetch('/api/detect-risk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transcriptionId: transcription.id,
+          text: fullText
+        })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Risk analysis failed')
+      }
+
+      // Poll for completion instead of refreshing
+      await pollForRiskAnalysisCompletion(transcription.id)
+
+    } catch (error) {
+      setRiskAnalysisError(error instanceof Error ? error.message : 'Unknown error occurred')
+      setIsAnalyzingRisk(false)
+    }
+  }
+
+  // Poll for risk analysis completion
+  const pollForRiskAnalysisCompletion = async (transcriptionId: string) => {
+    const maxAttempts = 30 // 30 attempts * 2 seconds = 60 seconds max wait
+    let attempts = 0
+
+    const poll = async (): Promise<void> => {
+      try {
+        attempts++
+        
+        const response = await fetch(`/api/detect-risk?transcriptionId=${transcriptionId}`)
+        const data = await response.json()
+
+        if (response.ok && data.success) {
+          const status = data.riskDetection.status
+          
+          if (status === 'completed') {
+            // Analysis completed, refresh the page to show results
+            window.location.reload()
+            return
+          } else if (status === 'failed') {
+            setRiskAnalysisError('Risk analysis failed on server')
+            setIsAnalyzingRisk(false)
+            return
+          } else if (status === 'analyzing') {
+            // Still processing, continue polling
+            if (attempts < maxAttempts) {
+              setTimeout(() => poll(), 2000) // Wait 2 seconds before next poll
+            } else {
+              setRiskAnalysisError('Analysis timed out. Please try again.')
+              setIsAnalyzingRisk(false)
+            }
+            return
+          }
+        }
+        
+        // If we get here, something went wrong
+        if (attempts < maxAttempts) {
+          setTimeout(() => poll(), 2000)
+        } else {
+          setRiskAnalysisError('Unable to get analysis status. Please try again.')
+          setIsAnalyzingRisk(false)
+        }
+        
+      } catch (error) {
+        if (attempts < maxAttempts) {
+          setTimeout(() => poll(), 2000)
+        } else {
+          setRiskAnalysisError('Network error while checking analysis status')
+          setIsAnalyzingRisk(false)
+        }
+      }
+    }
+
+    // Start polling
+    setTimeout(() => poll(), 2000) // Initial delay of 2 seconds
+  }
+
+  // Get risk status badge
+  const getRiskStatusBadge = () => {
+    switch (transcription.riskDetectionStatus) {
+      case 'completed':
+        if (transcription.riskDetectionResult === 'เข้าข่ายผิด') {
+          return (
+            <Badge variant="destructive" className="gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              <span className="thai-text">เข้าข่ายผิดกฎหมาย</span>
+            </Badge>
+          )
+        } else if (transcription.riskDetectionResult === 'ไม่ผิด') {
+          return (
+            <Badge variant="secondary" className="gap-1">
+              <Shield className="h-3 w-3" />
+              <span className="thai-text">ไม่มีความเสี่ยง</span>
+            </Badge>
+          )
+        } else {
+          return (
+            <Badge variant="outline" className="gap-1">
+              <AlertCircle className="h-3 w-3" />
+              <span className="thai-text">ไม่สามารถวิเคราะห์ได้</span>
+            </Badge>
+          )
+        }
+      case 'analyzing':
+        return (
+          <Badge variant="outline" className="gap-1">
+            <Loader2 className="h-3 w-3 animate-spin" />
+            <span className="thai-text">กำลังวิเคราะห์...</span>
+          </Badge>
+        )
+      case 'failed':
+        return (
+          <Badge variant="destructive" className="gap-1">
+            <AlertCircle className="h-3 w-3" />
+            <span className="thai-text">วิเคราะห์ไม่สำเร็จ</span>
+          </Badge>
+        )
+      default:
+        return (
+          <Badge variant="outline">
+            <span className="thai-text">ยังไม่ได้วิเคราะห์</span>
+          </Badge>
+        )
+    }
+  }
+
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4 thai-content">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">{transcription.title}</h1>
-        <ProcessingStatus status={transcription.status} jobId={transcription.id} />
+        <h1 className="text-3xl font-bold thai-text">{transcription.title}</h1>
+        <div className="flex items-center gap-3">
+          {getRiskStatusBadge()}
+          <ProcessingStatus status={transcription.status} jobId={transcription.id} />
+        </div>
       </div>
 
-      {transcription.description && <p className="text-muted-foreground">{transcription.description}</p>}
+      {/* Risk Detection Section */}
+      {transcription.status === "completed" && (
+        <Card className="border-l-4 border-l-orange-400">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <h3 className="text-sm font-medium thai-text">การตรวจสอบความเสี่ยงทางกฎหมาย</h3>
+                <p className="text-xs text-muted-foreground thai-text">
+                  ตรวจสอบเนื้อหาที่อาจเสี่ยงต่อการฝ่าฝืนกฎหมาย
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                {transcription.riskDetectionStatus === 'not_analyzed' && (
+                  <Button
+                    onClick={handleRiskDetection}
+                    disabled={isAnalyzingRisk}
+                    size="sm"
+                    variant="outline"
+                  >
+                    {isAnalyzingRisk ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        <span className="thai-text">กำลังวิเคราะห์...</span>
+                      </>
+                    ) : (
+                      <>
+                        <AlertTriangle className="h-4 w-4 mr-2" />
+                        <span className="thai-text">ตรวจสอบความเสี่ยง</span>
+                      </>
+                    )}
+                  </Button>
+                )}
+                {transcription.riskDetectionStatus === 'failed' && (
+                  <Button
+                    onClick={handleRiskDetection}
+                    disabled={isAnalyzingRisk}
+                    size="sm"
+                    variant="outline"
+                  >
+                    <AlertCircle className="h-4 w-4 mr-2" />
+                    <span className="thai-text">ลองใหม่</span>
+                  </Button>
+                )}
+              </div>
+            </div>
+            
+            {/* Show analysis result */}
+            {transcription.riskDetectionStatus === 'completed' && transcription.riskAnalyzedAt && transcription.riskDetectionResponse && (
+              <div className="mt-3 space-y-3">
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="thai-text">ผลการวิเคราะห์:</span>
+                  <span>
+                    {format(new Date(transcription.riskAnalyzedAt), "dd/MM/yyyy HH:mm")}
+                  </span>
+                </div>
+                
+                {(() => {
+                  const parsedResponse = parseOllamaResponse(transcription.riskDetectionResponse)
+                  
+                  return (
+                    <div className="space-y-3">
+                      {/* Debug: Show database result vs parsed result */}
+                      <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                        <h4 className="text-sm font-semibold text-yellow-700 mb-2 thai-text">🔍 ข้อมูลการวิเคราะห์</h4>
+                        <div className="space-y-1 text-xs">
+                          <p><span className="font-medium">ผลจากฐานข้อมูล:</span> <span className="thai-text">{transcription.riskDetectionResult}</span></p>
+                          <p><span className="font-medium">ผลที่แยกได้จากการตอบ:</span> <span className="thai-text">{parsedResponse.finalAnswer}</span></p>
+                        </div>
+                      </div>
+
+                      {/* Final Answer - Most Important */}
+                      {parsedResponse.finalAnswer && (
+                        <div className="p-3 bg-primary/10 border border-primary/20 rounded-md">
+                          <h4 className="text-sm font-semibold text-primary mb-2 thai-text">📋 คำตอบสุดท้าย</h4>
+                          <p className="text-sm font-medium thai-text">{parsedResponse.finalAnswer}</p>
+                        </div>
+                      )}
+                      
+                      {/* Summary */}
+                      {parsedResponse.summary && (
+                        <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
+                          <h4 className="text-sm font-semibold text-blue-700 mb-2 thai-text">📝 สรุป</h4>
+                          <p className="text-sm text-blue-800 thai-text">{parsedResponse.summary}</p>
+                        </div>
+                      )}
+                      
+                      {/* Thinking Process - Collapsible */}
+                      {parsedResponse.thinking && (
+                        <details className="group">
+                          <summary className="cursor-pointer p-3 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors">
+                            <span className="text-sm font-semibold text-gray-700 thai-text">🤔 กระบวนการคิด (คลิกเพื่อดู)</span>
+                          </summary>
+                          <div className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-md">
+                            <p className="text-sm text-gray-700 whitespace-pre-wrap thai-text">{parsedResponse.thinking}</p>
+                          </div>
+                        </details>
+                      )}
+                      
+                      {/* Raw Response - Collapsible for debugging */}
+                      <details className="group">
+                        <summary className="cursor-pointer p-2 bg-muted/50 border border-muted rounded-md hover:bg-muted transition-colors">
+                          <span className="text-xs text-muted-foreground thai-text">🔍 คำตอบแบบเต็ม (สำหรับการตรวจสอบ)</span>
+                        </summary>
+                        <div className="mt-2 p-3 bg-muted/30 border border-muted rounded-md">
+                          <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-mono overflow-x-auto thai-text">
+                            {transcription.riskDetectionResponse}
+                          </pre>
+                        </div>
+                      </details>
+                    </div>
+                  )
+                })()}
+              </div>
+            )}
+
+            {/* Show error */}
+            {riskAnalysisError && (
+              <div className="mt-3 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                <p className="text-sm text-destructive thai-text">{riskAnalysisError}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {transcription.description && <p className="text-muted-foreground thai-text">{transcription.description}</p>}
 
       <div className="flex flex-col sm:flex-row gap-4 text-sm text-muted-foreground">
         <p>
@@ -172,9 +506,6 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
                       >
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-xs text-muted-foreground">{formatTime(segment.start)}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {segment.confidence ? formatConfidence(segment.confidence) : ""}
-                          </span>
                         </div>
                         <p>
                           {segment.words.map((word, idx) => (
@@ -184,7 +515,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
                                 e.stopPropagation()
                                 handleWordClick(segment.id, idx, word.start)
                               }}
-                              className={`cursor-pointer inline-block ${
+                              className={`cursor-pointer inline-block thai-text ${
                                 activeWordIndex?.segmentId === segment.id && activeWordIndex?.wordIndex === idx
                                   ? "bg-primary text-primary-foreground px-0.5 rounded"
                                   : ""

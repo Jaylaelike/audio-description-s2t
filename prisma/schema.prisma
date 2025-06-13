@@ -17,6 +17,10 @@ model TranscriptionJob {
   originalAudioFileName   String
   status                  String    @default("pending") // e.g., "pending", "processing", "completed", "failed"
   transcriptionResultJson Json?     // To store the full JSON response from the API
+  riskDetectionStatus     String    @default("not_analyzed") // "not_analyzed", "analyzing", "completed", "failed"
+  riskDetectionResult     String?   // Store Ollama response: "เข้าข่ายผิด" or "ไม่ผิด"
+  riskDetectionResponse   String?   // Store full Ollama response
+  riskAnalyzedAt          DateTime? // When risk analysis was completed
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
 }
