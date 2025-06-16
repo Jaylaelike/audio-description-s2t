@@ -9,6 +9,7 @@ import Link from "next/link"
 import { FileAudio, ChevronDown, ChevronUp } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
+import { AlertTriangle, Shield, Loader2, AlertCircle, RefreshCw } from "lucide-react"
 
 type TranscriptionJob = {
   id: string
@@ -18,6 +19,8 @@ type TranscriptionJob = {
   createdAt: Date
   updatedAt: Date
   transcriptionResultJson: any
+  riskDetectionStatus: string
+  riskDetectionResult: string | null
 }
 
 interface TranscriptionsListProps {
@@ -25,6 +28,106 @@ interface TranscriptionsListProps {
 }
 
 export function TranscriptionsList({ transcriptions }: TranscriptionsListProps) {
+  const [reAnalyzingRisk, setReAnalyzingRisk] = useState<Set<string>>(new Set())
+
+  // Handle manual risk re-analysis
+  const handleReAnalyzeRisk = async (job: TranscriptionJob) => {
+    if (!job.transcriptionResultJson) return
+
+    setReAnalyzingRisk(prev => new Set(prev).add(job.id))
+
+    try {
+      const text = typeof job.transcriptionResultJson === 'string' 
+        ? JSON.parse(job.transcriptionResultJson).text 
+        : job.transcriptionResultJson.text
+
+      // Submit to backend queue
+      const response = await fetch('http://localhost:8000/detect-risk/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transcription_id: job.id,
+          text: text
+        })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        console.log(`Risk re-analysis queued for ${job.id} with task ID: ${data.task_id}`)
+        
+        // Refresh the page after a short delay to show updated status
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
+      } else {
+        console.error('Failed to queue risk re-analysis')
+        setReAnalyzingRisk(prev => {
+          const newSet = new Set(prev)
+          newSet.delete(job.id)
+          return newSet
+        })
+      }
+    } catch (error) {
+      console.error('Error in risk re-analysis:', error)
+      setReAnalyzingRisk(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(job.id)
+        return newSet
+      })
+    }
+  }
+
+  // Render risk detection status badge
+  const RiskBadge = ({ detectionStatus, detectionResult }: { detectionStatus: string; detectionResult: string | null }) => {
+    switch (detectionStatus) {
+      case 'completed':
+        if (detectionResult === 'เข้าข่ายผิด') {
+          return (
+            <Badge variant="destructive" className="gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              <span>เข้าข่ายผิดกฎหมาย</span>
+            </Badge>
+          )
+        } else if (detectionResult === 'ไม่ผิด') {
+          return (
+            <Badge variant="secondary" className="gap-1">
+              <Shield className="h-3 w-3" />
+              <span>ไม่มีความเสี่ยง</span>
+            </Badge>
+          )
+        } else {
+          return (
+            <Badge variant="outline" className="gap-1">
+              <AlertCircle className="h-3 w-3" />
+              <span>ไม่สามารถวิเคราะห์ได้</span>
+            </Badge>
+          )
+        }
+      case 'analyzing':
+        return (
+          <Badge variant="outline" className="gap-1">
+            <Loader2 className="h-3 w-3 animate-spin" />
+            <span>กำลังวิเคราะห์...</span>
+          </Badge>
+        )
+      case 'failed':
+        return (
+          <Badge variant="destructive" className="gap-1">
+            <AlertCircle className="h-3 w-3" />
+            <span>วิเคราะห์ไม่สำเร็จ</span>
+          </Badge>
+        )
+      default:
+        return (
+          <Badge variant="outline">
+            <span>ยังไม่ได้วิเคราะห์</span>
+          </Badge>
+        )
+    }
+  }
+
   const [expandedRow, setExpandedRow] = useState<string | null>(null)
 
   const getStatusColor = (status: string) => {
@@ -102,6 +205,7 @@ export function TranscriptionsList({ transcriptions }: TranscriptionsListProps) 
               <TableHead>Status</TableHead>
               <TableHead>Created</TableHead>
               <TableHead>Updated</TableHead>
+              <TableHead>Risk</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -122,6 +226,33 @@ export function TranscriptionsList({ transcriptions }: TranscriptionsListProps) 
                   </TableCell>
                   <TableCell title={format(new Date(job.updatedAt), "PPpp")}>
                     {formatDistanceToNow(new Date(job.updatedAt), { addSuffix: true })}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <RiskBadge
+                        detectionStatus={job.riskDetectionStatus}
+                        detectionResult={job.riskDetectionResult}
+                      />
+                      {job.status === 'completed' && job.transcriptionResultJson && (
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleReAnalyzeRisk(job)
+                          }}
+                          disabled={reAnalyzingRisk.has(job.id)}
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 w-6 p-0"
+                          title="Re-analyze risk"
+                        >
+                          {reAnalyzingRisk.has(job.id) ? (
+                            <Loader2 className="h-3 w-3 animate-spin" />
+                          ) : (
+                            <RefreshCw className="h-3 w-3" />
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell>
                     <Link href={`/transcriptions/${job.id}`} onClick={(e) => e.stopPropagation()}>

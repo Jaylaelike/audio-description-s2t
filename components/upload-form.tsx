@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { ButtonLoading } from "@/components/mini-loading"
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -125,21 +126,19 @@ export function UploadForm() {
                   {...rest}
                 />
               </FormControl>
-              <FormDescription>Upload an audio file (MP3, WAV, M4A)</FormDescription>
+              <FormDescription>Upload an audio file (MP3, WAV, M4A Should be less than 20 mb)</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Uploading...
-            </>
-          ) : (
-            "Upload and Transcribe"
-          )}
+          <ButtonLoading 
+            isLoading={isSubmitting} 
+            loadingText="กำลังอัปโหลดและเตรียมการถอดเสียง..."
+          >
+            Upload and Transcribe
+          </ButtonLoading>
         </Button>
       </form>
     </Form>

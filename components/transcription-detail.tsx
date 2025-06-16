@@ -9,6 +9,42 @@ import { formatDistanceToNow, format } from "date-fns"
 import { ProcessingStatus } from "@/components/ui/progressing-status"
 import { AlertTriangle, Shield, Loader2, AlertCircle } from "lucide-react"
 
+// Add custom styles for animations
+const styles = `
+  @keyframes wordHighlight {
+    0% { background-color: transparent; transform: scale(1); }
+    50% { background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); transform: scale(1.05); }
+    100% { background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); transform: scale(1.05); }
+  }
+  
+  .word-active {
+    animation: wordHighlight 0.3s ease-in-out;
+  }
+  
+  .segment-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes slideInLeft {
+    0% { transform: translateX(-20px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  
+  .segment-enter {
+    animation: slideInLeft 0.3s ease-out;
+  }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  if (!document.head.querySelector('style[data-transcript-styles]')) {
+    styleElement.setAttribute('data-transcript-styles', 'true');
+    document.head.appendChild(styleElement);
+  }
+}
+
 interface Word {
   text: string
   start: number
@@ -54,8 +90,29 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
   const [activeWordIndex, setActiveWordIndex] = useState<{ segmentId: number; wordIndex: number } | null>(null)
   const [isAnalyzingRisk, setIsAnalyzingRisk] = useState(false)
   const [riskAnalysisError, setRiskAnalysisError] = useState<string | null>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const segmentRefs = useRef<Map<number, HTMLDivElement>>(new Map())
+
+  // Track audio play/pause state
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const handlePlay = () => setIsPlaying(true)
+    const handlePause = () => setIsPlaying(false)
+    const handleEnded = () => setIsPlaying(false)
+
+    audio.addEventListener("play", handlePlay)
+    audio.addEventListener("pause", handlePause)
+    audio.addEventListener("ended", handleEnded)
+
+    return () => {
+      audio.removeEventListener("play", handlePlay)
+      audio.removeEventListener("pause", handlePause)
+      audio.removeEventListener("ended", handleEnded)
+    }
+  }, [])
 
   // Track audio playback time to highlight current word
   useEffect(() => {
@@ -70,33 +127,46 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
       // Find the segment and word that corresponds to the current time
       for (const segment of transcription.transcriptionResultJson.segments) {
         if (currentTime >= segment.start && currentTime <= segment.end) {
+          // Update selected segment if changed
+          if (segment.id !== selectedSegmentId) {
+            setSelectedSegmentId(segment.id)
+            const segmentElement = segmentRefs.current.get(segment.id)
+            segmentElement?.scrollIntoView({ behavior: "smooth", block: "center" })
+          }
+
           // Find the specific word in this segment
-          for (let i = 0; i < segment.words.length; i++) {
-            const word = segment.words[i]
-            if (currentTime >= word.start && currentTime <= word.end) {
-              setActiveWordIndex({ segmentId: segment.id, wordIndex: i })
-
-              // Scroll the segment into view if it's not already visible
-              if (segment.id !== selectedSegmentId) {
-                setSelectedSegmentId(segment.id)
-                const segmentElement = segmentRefs.current.get(segment.id)
-                segmentElement?.scrollIntoView({ behavior: "smooth", block: "nearest" })
+          if (segment.words && segment.words.length > 0) {
+            for (let i = 0; i < segment.words.length; i++) {
+              const word = segment.words[i]
+              if (currentTime >= word.start && currentTime <= word.end) {
+                setActiveWordIndex({ segmentId: segment.id, wordIndex: i })
+                return
               }
-
-              return
             }
           }
+          
+          // If no specific word is found but we're in the segment, clear active word
+          setActiveWordIndex(null)
+          return
         }
       }
+
+      // If we're not in any segment, clear highlights
+      setActiveWordIndex(null)
+      setSelectedSegmentId(null)
     }
 
-    // Update every 100ms for smoother highlighting
-    const interval = setInterval(updateHighlight, 100)
+    // Update every 50ms for smoother highlighting and progress bars
+    const interval = setInterval(updateHighlight, 50)
     audio.addEventListener("timeupdate", updateHighlight)
+    audio.addEventListener("play", updateHighlight)
+    audio.addEventListener("pause", updateHighlight)
 
     return () => {
       clearInterval(interval)
       audio.removeEventListener("timeupdate", updateHighlight)
+      audio.removeEventListener("play", updateHighlight)
+      audio.removeEventListener("pause", updateHighlight)
     }
   }, [transcription.transcriptionResultJson, selectedSegmentId])
 
@@ -107,6 +177,28 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
     if (audioRef.current) {
       audioRef.current.currentTime = startTime
       audioRef.current.play()
+    }
+  }
+
+  // New dedicated handler for segment clicks
+  const handleSegmentClick = (segment: Segment) => {
+    console.log(`Clicking segment ${segment.id} at timestamp ${segment.start}s`); // Debug log
+    
+    setSelectedSegmentId(segment.id)
+    setActiveWordIndex(null) // Clear word-level highlighting when clicking segment
+    
+    if (audioRef.current) {
+      try {
+        audioRef.current.currentTime = segment.start
+        audioRef.current.play().catch(error => {
+          console.log("Auto-play failed (this is normal for some browsers):", error)
+          // Auto-play might be blocked by browser, that's OK
+        })
+      } catch (error) {
+        console.error("Error setting audio time:", error)
+      }
+    } else {
+      console.warn("Audio ref not available")
     }
   }
 
@@ -166,7 +258,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
     return sections
   }
 
-  // Handle risk detection with proper waiting for Ollama processing
+  // Handle risk detection using backend queue system
   const handleRiskDetection = async () => {
     if (!transcription.transcriptionResultJson) {
       setRiskAnalysisError('No transcription available for analysis')
@@ -179,14 +271,14 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
     try {
       const fullText = transcription.transcriptionResultJson.text
       
-      // Start the analysis
-      const response = await fetch('/api/detect-risk', {
+      // Submit to backend queue
+      const response = await fetch('http://localhost:8000/detect-risk/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          transcriptionId: transcription.id,
+          transcription_id: transcription.id,
           text: fullText
         })
       })
@@ -197,8 +289,11 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
         throw new Error(data.error || 'Risk analysis failed')
       }
 
-      // Poll for completion instead of refreshing
-      await pollForRiskAnalysisCompletion(transcription.id)
+      const taskId = data.task_id
+      console.log(`Risk detection task queued with ID: ${taskId}`)
+
+      // Poll for completion using backend API
+      await pollForBackendRiskAnalysisCompletion(taskId)
 
     } catch (error) {
       setRiskAnalysisError(error instanceof Error ? error.message : 'Unknown error occurred')
@@ -206,33 +301,61 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
     }
   }
 
-  // Poll for risk analysis completion
-  const pollForRiskAnalysisCompletion = async (transcriptionId: string) => {
-    const maxAttempts = 30 // 30 attempts * 2 seconds = 60 seconds max wait
+  // Poll for backend risk analysis completion
+  const pollForBackendRiskAnalysisCompletion = async (taskId: string) => {
+    const maxAttempts = 60 // 60 attempts * 3 seconds = 3 minutes max wait
     let attempts = 0
 
     const poll = async (): Promise<void> => {
       try {
         attempts++
         
-        const response = await fetch(`/api/detect-risk?transcriptionId=${transcriptionId}`)
+        const response = await fetch(`http://localhost:8000/task/${taskId}`)
         const data = await response.json()
 
-        if (response.ok && data.success) {
-          const status = data.riskDetection.status
+        if (response.ok) {
+          const status = data.status
           
           if (status === 'completed') {
-            // Analysis completed, refresh the page to show results
-            window.location.reload()
+            // Risk analysis completed, now update database via the API
+            const result = data.result
+            try {
+              // Update the database with the results
+              const updateResponse = await fetch('/api/detect-risk', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  transcriptionId: result.transcription_id,
+                  text: 'dummy', // This won't be used since we're providing results
+                  overrideResults: {
+                    riskResult: result.risk_result,
+                    ollamaResponse: result.ollama_response
+                  }
+                })
+              })
+              
+              if (updateResponse.ok) {
+                // Analysis completed, refresh the page to show results
+                window.location.reload()
+              } else {
+                setRiskAnalysisError('Analysis completed but failed to update database')
+                setIsAnalyzingRisk(false)
+              }
+            } catch (updateError) {
+              setRiskAnalysisError('Analysis completed but failed to save results')
+              setIsAnalyzingRisk(false)
+            }
             return
           } else if (status === 'failed') {
-            setRiskAnalysisError('Risk analysis failed on server')
+            setRiskAnalysisError(data.error_message || 'Risk analysis failed on server')
             setIsAnalyzingRisk(false)
             return
-          } else if (status === 'analyzing') {
+          } else if (status === 'processing' || status === 'queued') {
             // Still processing, continue polling
             if (attempts < maxAttempts) {
-              setTimeout(() => poll(), 2000) // Wait 2 seconds before next poll
+              setTimeout(() => poll(), 3000) // Wait 3 seconds before next poll
             } else {
               setRiskAnalysisError('Analysis timed out. Please try again.')
               setIsAnalyzingRisk(false)
@@ -243,7 +366,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
         
         // If we get here, something went wrong
         if (attempts < maxAttempts) {
-          setTimeout(() => poll(), 2000)
+          setTimeout(() => poll(), 3000)
         } else {
           setRiskAnalysisError('Unable to get analysis status. Please try again.')
           setIsAnalyzingRisk(false)
@@ -251,7 +374,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
         
       } catch (error) {
         if (attempts < maxAttempts) {
-          setTimeout(() => poll(), 2000)
+          setTimeout(() => poll(), 3000)
         } else {
           setRiskAnalysisError('Network error while checking analysis status')
           setIsAnalyzingRisk(false)
@@ -334,7 +457,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                {transcription.riskDetectionStatus === 'not_analyzed' && (
+                {(transcription.riskDetectionStatus === 'not_analyzed' || !transcription.riskDetectionStatus) && (
                   <Button
                     onClick={handleRiskDetection}
                     disabled={isAnalyzingRisk}
@@ -354,15 +477,24 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
                     )}
                   </Button>
                 )}
-                {transcription.riskDetectionStatus === 'failed' && (
+                {(transcription.riskDetectionStatus === 'failed' || transcription.riskDetectionStatus === 'completed') && (
                   <Button
                     onClick={handleRiskDetection}
                     disabled={isAnalyzingRisk}
                     size="sm"
                     variant="outline"
                   >
-                    <AlertCircle className="h-4 w-4 mr-2" />
-                    <span className="thai-text">ลองใหม่</span>
+                    {isAnalyzingRisk ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        <span className="thai-text">กำลังวิเคราะห์...</span>
+                      </>
+                    ) : (
+                      <>
+                        <AlertCircle className="h-4 w-4 mr-2" />
+                        <span className="thai-text">{transcription.riskDetectionStatus === 'failed' ? 'ลองใหม่' : 'วิเคราะห์ใหม่'}</span>
+                      </>
+                    )}
                   </Button>
                 )}
               </div>
@@ -467,13 +599,26 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column: Audio Player */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="p-4 border rounded-lg">
+          <div className={`p-4 border rounded-lg transition-all duration-300 ${
+            isPlaying ? "border-primary shadow-md bg-primary/5" : "hover:border-muted-foreground/50"
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-muted-foreground">Audio Player</h3>
+              <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                isPlaying ? "bg-green-500 animate-pulse" : "bg-muted"
+              }`} />
+            </div>
             <audio
               ref={audioRef}
               controls
               className="w-full"
               src={`/uploads/audio/${transcription.originalAudioFileName}`}
             />
+            {selectedSegmentId && (
+              <div className="mt-2 text-xs text-muted-foreground">
+                Currently playing: Segment {selectedSegmentId}
+              </div>
+            )}
           </div>
         </div>
 
@@ -481,8 +626,25 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
         <div className="lg:col-span-1">
           <Card className="h-full">
             <CardContent className="p-0">
-              <div className="p-4 border-b bg-muted/50">
-                <h2 className="text-lg font-semibold">Transcript</h2>
+              <div className={`p-4 border-b transition-colors duration-300 ${
+                isPlaying ? "bg-primary/10 border-primary/20" : "bg-muted/50"
+              }`}>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold">Transcript</h2>
+                  <div className="flex items-center gap-2">
+                    {selectedSegmentId && (
+                      <span className="text-xs text-muted-foreground bg-primary/10 px-2 py-1 rounded">
+                        Segment {selectedSegmentId}
+                      </span>
+                    )}
+                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      isPlaying ? "bg-green-500 animate-pulse" : "bg-muted"
+                    }`} />
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Click on segments or words to jump to timestamp
+                </p>
               </div>
 
               {transcription.status === "completed" && transcription.transcriptionResultJson ? (
@@ -494,38 +656,85 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
                         ref={(el) => {
                           if (el) segmentRefs.current.set(segment.id, el)
                         }}
-                        className={`p-2 rounded-md transition-colors ${
-                          selectedSegmentId === segment.id ? "bg-muted" : "hover:bg-muted/50"
+                        className={`group p-3 rounded-lg transition-all duration-300 cursor-pointer segment-enter ${
+                          selectedSegmentId === segment.id 
+                            ? "bg-primary/10 border-l-4 border-l-primary shadow-sm scale-[1.02] segment-pulse" 
+                            : "hover:bg-muted/50 hover:shadow-sm hover:scale-[1.01]"
                         }`}
-                        onClick={() => {
-                          setSelectedSegmentId(segment.id)
-                          if (segment.words.length > 0) {
-                            handleWordClick(segment.id, 0, segment.start)
-                          }
-                        }}
+                        onClick={() => handleSegmentClick(segment)} // Use the new handler here
                       >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs text-muted-foreground">{formatTime(segment.start)}</span>
-                        </div>
-                        <p>
-                          {segment.words.map((word, idx) => (
-                            <span
-                              key={`${segment.id}-${idx}`}
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                handleWordClick(segment.id, idx, word.start)
-                              }}
-                              className={`cursor-pointer inline-block thai-text ${
-                                activeWordIndex?.segmentId === segment.id && activeWordIndex?.wordIndex === idx
-                                  ? "bg-primary text-primary-foreground px-0.5 rounded"
-                                  : ""
+                        <div className="flex items-center justify-between mb-2">
+                          <span className={`text-xs font-medium transition-colors ${
+                            selectedSegmentId === segment.id ? "text-primary" : "text-muted-foreground"
+                          }`}>
+                            {formatTime(segment.start)} - {formatTime(segment.end)}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            {/* Play icon that appears on hover */}
+                            <svg 
+                              className={`w-3 h-3 transition-all duration-200 ${
+                                selectedSegmentId === segment.id 
+                                  ? "opacity-100 text-primary" 
+                                  : "opacity-0 group-hover:opacity-100 text-muted-foreground"
                               }`}
-                              title={`Confidence: ${formatConfidence(word.confidence)}`}
+                              fill="currentColor" 
+                              viewBox="0 0 24 24"
                             >
-                              {word.text}{" "}
-                            </span>
-                          ))}
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              selectedSegmentId === segment.id 
+                                ? "bg-primary animate-pulse" 
+                                : "bg-transparent"
+                            }`} />
+                          </div>
+                        </div>
+                        <p className="leading-relaxed">
+                          {segment.words && segment.words.length > 0 ? (
+                            segment.words.map((word, idx) => (
+                              <span
+                                key={`${segment.id}-${idx}`}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  handleWordClick(segment.id, idx, word.start)
+                                }}
+                                className={`cursor-pointer inline-block thai-text transition-all duration-200 mx-0.5 px-1 py-0.5 rounded ${
+                                  activeWordIndex?.segmentId === segment.id && activeWordIndex?.wordIndex === idx
+                                    ? "bg-primary text-primary-foreground shadow-md transform scale-105 word-active"
+                                    : selectedSegmentId === segment.id
+                                    ? "hover:bg-primary/20 hover:scale-105 hover:shadow-sm"
+                                    : "hover:bg-muted hover:scale-105"
+                                }`}
+                                title={`Confidence: ${formatConfidence(word.confidence)} | Click to play`}
+                                style={{
+                                  animationDelay: activeWordIndex?.segmentId === segment.id && activeWordIndex?.wordIndex === idx 
+                                    ? '0ms' 
+                                    : `${idx * 50}ms`
+                                }}
+                              >
+                                {word.text}
+                              </span>
+                            ))
+                          ) : (
+                            <span className="thai-text">{segment.text}</span>
+                          )}
                         </p>
+                        
+                        {/* Progress bar for active segment */}
+                        {selectedSegmentId === segment.id && (
+                          <div className="mt-2 w-full bg-muted h-1 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary transition-all duration-300 ease-out rounded-full"
+                              style={{
+                                width: audioRef.current 
+                                  ? `${Math.min(100, Math.max(0, 
+                                      ((audioRef.current.currentTime - segment.start) / (segment.end - segment.start)) * 100
+                                    ))}%`
+                                  : '0%'
+                              }}
+                            />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

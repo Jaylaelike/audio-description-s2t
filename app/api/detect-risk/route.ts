@@ -103,11 +103,40 @@ function extractRiskResult(response: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const { transcriptionId, text } = await request.json();
+    const { transcriptionId, text, overrideResults } = await request.json();
 
-    if (!transcriptionId || !text) {
+    if (!transcriptionId) {
       return NextResponse.json(
-        { error: 'Missing transcriptionId or text' },
+        { error: 'Missing transcriptionId' },
+        { status: 400 }
+      );
+    }
+
+    // Handle override results for manual re-detection
+    if (overrideResults) {
+      // Update with provided results directly
+      const updatedTranscription = await prisma.transcriptionJob.update({
+        where: { id: transcriptionId },
+        data: {
+          // @ts-ignore - Temporary until types are updated
+          riskDetectionStatus: 'completed',
+          riskDetectionResult: overrideResults.riskResult,
+          riskDetectionResponse: overrideResults.ollamaResponse,
+          riskAnalyzedAt: new Date()
+        }
+      });
+
+      return NextResponse.json({
+        success: true,
+        result: overrideResults.riskResult,
+        response: overrideResults.ollamaResponse,
+        transcription: updatedTranscription
+      });
+    }
+
+    if (!text) {
+      return NextResponse.json(
+        { error: 'Missing text for analysis' },
         { status: 400 }
       );
     }

@@ -159,3 +159,273 @@ timestamp,event_type,status,details
 2025-06-13T16:47:49.461381,TRANSCRIBE_REQUEST,RECEIVED,"File: B.mp3, Content-Type: audio/mpeg"
 2025-06-13T16:50:03.635016,TRANSCRIBE_SUCCESS,SUCCESS,File: B.mp3
 2025-06-13T16:50:03.635339,TRANSCRIPTION_DATA,LOGGED,"File: B.mp3, Text Snippet: ที่จะอยู่อย่างเราเกลียดทางถึงมาก็จัดให้ โจโจสั่งนะครับบรรยากาศสบายสบาย ช่วงวันพระหัสวันนี้นะครับแล้วก็ตอนนี้สิบห้านละละกาอีกสามสิบนาทีนะครับขอให้คนฟังมีความสุข กับการฟังรายการนะครับมากมายแล้วก่อนนะครั..."
+2025-06-13T20:22:44.575589,MODEL_LOAD,SUCCESS,Whisper model 'turbo' loaded successfully.
+2025-06-13T20:22:54.676491,MODEL_LOAD,SUCCESS,Whisper model 'turbo' loaded successfully.
+2025-06-13T20:57:54.727506,TRANSCRIBE_REQUEST,RECEIVED,"File: IMG_9832.MP3.mp3, Content-Type: audio/mpeg"
+2025-06-13T21:00:26.380307,TRANSCRIBE_SUCCESS,SUCCESS,File: IMG_9832.MP3.mp3
+2025-06-13T21:00:26.380513,TRANSCRIPTION_DATA,LOGGED,"File: IMG_9832.MP3.mp3, Text Snippet: ไม่ว่าคุณจะทำอาชีพอะไร ก็รับโบนัสครั้งแรกไปเลย 50%ไม่ว่าคุณจะเป็นใคร ก็รวยได้ง่ายๆแค่คุณชวนเพื่อนมาเล่น ก็รับโบนัสเพิ่ม 0.6%แค่คุณจะเป็นใคร ก็รับโบนัสเพิ่ม 0.6%เพราะเราคือทีมเดียวกันวันเกิด ก็รับไปเลย..."
+2025-06-13T21:11:44.577570,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Content-Type: audio/wav"
+2025-06-13T21:17:47.800366,TRANSCRIBE_SUCCESS,SUCCESS,File: FM23.wav
+2025-06-13T21:17:47.801324,TRANSCRIPTION_DATA,LOGGED,"File: FM23.wav, Text Snippet: สนใจ กต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยาลัยกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFM 89.5 MHzส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เคศดินแ..."
+2025-06-13T21:18:09.519779,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Content-Type: audio/wav"
+2025-06-13T21:24:07.499081,TRANSCRIBE_SUCCESS,SUCCESS,File: FM23.wav
+2025-06-13T21:24:07.499296,TRANSCRIPTION_DATA,LOGGED,"File: FM23.wav, Text Snippet: สนใจ กต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยาลัยกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFM 89.5 MHzส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เคศดินแ..."
+2025-06-13T21:27:01.387019,MODEL_LOAD,SUCCESS,Whisper model 'turbo' loaded successfully.
+2025-06-13T21:27:34.402703,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Content-Type: audio/wav"
+2025-06-13T21:33:31.112553,TRANSCRIBE_SUCCESS,SUCCESS,File: FM23.wav
+2025-06-13T21:33:31.112708,TRANSCRIPTION_DATA,LOGGED,"File: FM23.wav, Text Snippet: สนใจ กต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยาลัยกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFM 89.5 MHzส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เคศดินแ..."
+2025-06-14T10:54:06.931534,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-14T10:54:52.684946,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T10:54:52.692769,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T10:54:52.695026,CHUNKING,START,Creating smart chunks
+2025-06-14T10:55:04.556658,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T10:55:05.075342,CHUNK_ERROR,ERROR,Chunk 0 failed: transcribe_timestamped() got an unexpected keyword argument 'word_timestamps'
+2025-06-14T10:55:05.173956,CHUNK_ERROR,ERROR,Chunk 1 failed: transcribe_timestamped() got an unexpected keyword argument 'word_timestamps'
+2025-06-14T10:55:05.239511,TRANSCRIBE_FAILURE,ERROR,"File: FM23.wav, Error: Chunking process failed: All chunks failed to process"
+2025-06-14T10:57:38.945906,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-14T10:58:05.295474,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T10:58:05.299632,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T10:58:05.299798,CHUNKING,START,Creating smart chunks
+2025-06-14T10:58:17.128089,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T11:03:47.652385,MERGING,START,Merging 2 chunk results
+2025-06-14T11:03:47.654330,MERGING,SUCCESS,Results merged successfully
+2025-06-14T11:03:47.654425,TRANSCRIBE_SUCCESS,SUCCESS,"File: FM23.wav, Text preview: สนใจ กต่อมาที่เบอร์ 081-333-6857 มาเป็นทีมเดียวกันกับ 89.5 Innovation for Life ที่นี่ สถานีวิทยาลัยกรจายเสียง มหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรี FM 89.5 MHz ส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เค..."
+2025-06-14T11:07:33.696855,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T11:07:33.703065,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T11:07:33.703267,CHUNKING,START,Creating smart chunks
+2025-06-14T11:07:45.493709,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T11:13:10.321089,MERGING,START,Merging 2 chunk results
+2025-06-14T11:13:10.323168,MERGING,SUCCESS,Results merged successfully
+2025-06-14T11:13:10.323272,TRANSCRIBE_SUCCESS,SUCCESS,"File: FM23.wav, Text preview: สนใจ กต่อมาที่เบอร์ 081-333-6857 มาเป็นทีมเดียวกันกับ 89.5 Innovation for Life ที่นี่ สถานีวิทยาลัยกรจายเสียง มหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรี FM 89.5 MHz ส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เค..."
+2025-06-14T11:17:52.584657,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T11:17:52.588707,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T11:17:52.588846,CHUNKING,START,Creating smart chunks
+2025-06-14T11:18:04.380645,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T11:23:30.538465,MERGING,START,Merging 2 chunk results
+2025-06-14T11:23:30.539506,MERGING,SUCCESS,Results merged successfully
+2025-06-14T11:23:30.539611,TRANSCRIBE_SUCCESS,SUCCESS,"File: FM23.wav, Text preview: สนใจ กต่อมาที่เบอร์ 081-333-6857 มาเป็นทีมเดียวกันกับ 89.5 Innovation for Life ที่นี่ สถานีวิทยาลัยกรจายเสียง มหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรี FM 89.5 MHz ส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เค..."
+2025-06-14T11:28:43.642879,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T11:28:43.650178,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T11:28:43.650476,CHUNKING,START,Creating smart chunks
+2025-06-14T11:28:55.764341,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T11:34:27.694234,MERGING,START,Merging 2 chunk results
+2025-06-14T11:34:27.695518,MERGING,SUCCESS,Results merged successfully
+2025-06-14T11:34:27.695592,TRANSCRIBE_SUCCESS,SUCCESS,"File: FM23.wav, Text preview: สนใจ กต่อมาที่เบอร์ 081-333-6857 มาเป็นทีมเดียวกันกับ 89.5 Innovation for Life ที่นี่ สถานีวิทยาลัยกรจายเสียง มหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรี FM 89.5 MHz ส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เค..."
+2025-06-14T11:37:10.898070,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T11:37:10.902579,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T11:37:10.902716,CHUNKING,START,Creating smart chunks
+2025-06-14T11:37:23.195705,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T11:42:51.755359,MERGING,START,Merging 2 chunk results
+2025-06-14T11:42:51.757374,MERGING,SUCCESS,Results merged successfully
+2025-06-14T11:42:51.757444,TRANSCRIBE_SUCCESS,SUCCESS,"File: FM23.wav, Text preview: สนใจ กต่อมาที่เบอร์ 081-333-6857 มาเป็นทีมเดียวกันกับ 89.5 Innovation for Life ที่นี่ สถานีวิทยาลัยกรจายเสียง มหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรี FM 89.5 MHz ส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เค..."
+2025-06-14T11:52:34.158563,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-14T11:53:05.759671,TRANSCRIBE_REQUEST,RECEIVED,"File: FM23.wav, Size: 26968110 bytes"
+2025-06-14T11:53:05.764205,PROCESSING_MODE,CHUNKED,"File size 26968110 bytes > 20971520 bytes, using chunking"
+2025-06-14T11:53:05.764416,CHUNKING,START,Creating smart chunks
+2025-06-14T11:53:17.727986,CHUNKING,SUCCESS,Created 2 chunks
+2025-06-14T11:59:39.016581,MERGING,START,Merging 2 chunk results
+2025-06-14T11:59:39.018752,MERGING,SUCCESS,Results merged successfully
+2025-06-14T11:59:39.018817,TRANSCRIBE_SUCCESS,SUCCESS,"File: FM23.wav, Text preview: สนใจ กต่อมาที่เบอร์ 081-333-6857 มาเป็นทีมเดียวกันกับ 89.5 Innovation for Life ที่นี่ สถานีวิทยาลัยกรจายเสียง มหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรี FM 89.5 MHz ส่งกรจายเสียงจาก ถนนรัฐธรรมดี รังสิทธิ์ เค..."
+2025-06-14T11:59:39.042580,TRANSCRIBE_REQUEST,RECEIVED,"File: IMG_9832.MP3.mp3, Size: 2508634 bytes"
+2025-06-14T11:59:39.044587,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-14T12:02:27.014921,TRANSCRIBE_SUCCESS,SUCCESS,"File: IMG_9832.MP3.mp3, Text preview: ไม่ว่าคุณจะทำอาชีพอะไร ก็รับโบนัสครั้งแรกไปเลย 50%ไม่ว่าคุณจะเป็นใคร ก็รวยได้ง่ายๆแค่คุณชวนเพื่อนมาเล่น ก็รับโบนัสเพิ่ม 0.6%แค่คุณจะเป็นใคร ก็รับโบนัสเพิ่ม 0.6%เพราะเราคือทีมเดียวกันวันเกิด ก็รับไปเลย..."
+2025-06-14T12:04:48.441551,TRANSCRIBE_REQUEST,RECEIVED,"File: b6b6-dda9-45be-a076-5f55bb12ba48.mp3, Size: 6727872 bytes"
+2025-06-14T12:04:48.443494,PROCESSING_MODE,DIRECT,"File size 6727872 bytes <= 20971520 bytes, direct processing"
+2025-06-14T12:10:54.975336,TRANSCRIBE_SUCCESS,SUCCESS,"File: b6b6-dda9-45be-a076-5f55bb12ba48.mp3, Text preview: สนใจ ติดต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยุกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFN 89.5 Mhzสมกรจายเสียง จากถนนริพาวดีรังสิทธิ์เครดินแดงกรุง..."
+2025-06-14T12:20:09.196773,TRANSCRIBE_REQUEST,RECEIVED,"File: b6b6-dda9-45be-a076-5f55bb12ba48.mp3, Size: 6727872 bytes"
+2025-06-14T12:20:09.198283,PROCESSING_MODE,DIRECT,"File size 6727872 bytes <= 20971520 bytes, direct processing"
+2025-06-14T12:26:05.149038,TRANSCRIBE_SUCCESS,SUCCESS,"File: b6b6-dda9-45be-a076-5f55bb12ba48.mp3, Text preview: สนใจ ติดต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยุกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFN 89.5 Mhzสมกรจายเสียง จากถนนริพาวดีรังสิทธิ์เครดินแดงกรุง..."
+2025-06-14T12:58:37.332624,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:25:45.770854,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:26:26.665782,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:29:30.145305,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:32:52.358489,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:32:52.552772,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:33:42.726136,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/12d350c7-a1fb-41f8-b560-e10f6c1a276e.mp3, Size: 2508634 bytes"
+2025-06-16T12:33:42.727073,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T12:33:46.644592,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/12d350c7-a1fb-41f8-b560-e10f6c1a276e.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T12:33:53.660371,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/a764e1b5-75a1-45c9-9976-8e9f92ea0544.mp3, Size: 6727872 bytes"
+2025-06-16T12:33:53.660626,PROCESSING_MODE,DIRECT,"File size 6727872 bytes <= 20971520 bytes, direct processing"
+2025-06-16T12:33:56.683110,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/a764e1b5-75a1-45c9-9976-8e9f92ea0544.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T12:42:46.542559,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:42:47.052147,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:43:07.180482,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/d0ae0796-b20a-4176-9329-e0056d55941a.mp3, Size: 2508634 bytes"
+2025-06-16T12:43:07.181658,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T12:43:10.793697,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/d0ae0796-b20a-4176-9329-e0056d55941a.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T12:47:35.085242,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:47:39.278179,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:50:23.210301,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:50:29.841843,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:53:04.814469,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/51d0253e-b70b-4f28-a897-fc52c4de01ed.mp3, Size: 240343 bytes"
+2025-06-16T12:53:04.816788,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T12:53:10.732371,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/51d0253e-b70b-4f28-a897-fc52c4de01ed.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T12:54:27.414744,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:54:40.457871,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/481897c4-67c9-4e1d-a48c-f90c8e7a96fd.mp3, Size: 240343 bytes"
+2025-06-16T12:54:40.459409,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T12:54:43.705689,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/481897c4-67c9-4e1d-a48c-f90c8e7a96fd.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T12:57:46.928835,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:58:07.356731,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T12:58:42.430519,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/e06ed4c4-9125-4beb-a817-b59a83a9bde3.mp3, Size: 240343 bytes"
+2025-06-16T12:58:42.431183,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T12:58:45.408800,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/e06ed4c4-9125-4beb-a817-b59a83a9bde3.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T13:11:49.174329,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:11:49.836708,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:12:40.394556,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:12:42.834673,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:13:02.573834,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:13:09.615789,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:13:22.650575,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/5adc1c15-b6b2-4fb1-892d-b27ed766025b.mp3, Size: 240343 bytes"
+2025-06-16T13:13:22.652776,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T13:13:22.937468,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T13:13:25.756815,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/5adc1c15-b6b2-4fb1-892d-b27ed766025b.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T13:17:08.906916,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:17:38.895949,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:17:47.494194,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:17:56.527078,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/488d697f-ee91-471c-8869-24ff42129bfb.mp3, Size: 240343 bytes"
+2025-06-16T13:17:56.528897,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T13:17:56.869647,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T13:17:59.565554,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/488d697f-ee91-471c-8869-24ff42129bfb.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T13:19:11.176208,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T13:19:37.247449,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/24652a75-551f-4ab7-8b42-135ae091e2a8.mp3, Size: 240343 bytes"
+2025-06-16T13:19:37.248377,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T13:19:37.498416,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T13:19:40.314822,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/24652a75-551f-4ab7-8b42-135ae091e2a8.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T13:19:58.566798,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:18:34.173322,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:20:05.400181,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:21:33.307335,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:21:39.077672,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:21:55.133063,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/628f677b-e634-404a-8693-793202f06da0.mp3, Size: 240343 bytes"
+2025-06-16T14:21:55.134339,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:21:55.520445,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T14:21:58.266664,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/628f677b-e634-404a-8693-793202f06da0.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T14:35:40.083089,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:36:54.417443,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:37:13.580316,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:40:29.737761,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:40:39.546154,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:41:44.655437,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/333e0376-916c-4ea8-b881-c1ca368ced39.mp3, Size: 240343 bytes"
+2025-06-16T14:41:44.657165,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:41:45.122971,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T14:41:48.627378,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/333e0376-916c-4ea8-b881-c1ca368ced39.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T14:43:40.017502,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:43:43.155939,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:44:26.546476,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:44:41.647115,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:44:41.882045,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:44:53.970711,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:45:02.639331,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:45:12.295073,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:45:39.356131,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/b9ee70cc-5004-4f14-bab5-e64af5e23e06.mp3, Size: 240343 bytes"
+2025-06-16T14:45:39.357963,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:45:39.622992,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T14:45:42.997727,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/b9ee70cc-5004-4f14-bab5-e64af5e23e06.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T14:46:19.430833,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:46:42.501702,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/bbb0f900-fff9-4a80-99cb-80c558ee2f53.mp3, Size: 240343 bytes"
+2025-06-16T14:46:42.503236,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:46:42.790513,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T14:46:45.575755,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/bbb0f900-fff9-4a80-99cb-80c558ee2f53.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T14:47:26.668858,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:47:38.719449,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/a4bbee4f-3477-4250-888f-082a7029acbe.mp3, Size: 2508634 bytes"
+2025-06-16T14:47:38.720290,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:47:39.109932,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (2507707,)"
+2025-06-16T14:47:41.896942,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/a4bbee4f-3477-4250-888f-082a7029acbe.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T14:48:05.382521,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:49:04.763005,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:49:26.747248,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:49:39.521235,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:49:49.613086,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:50:09.059352,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:50:10.794375,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:50:57.394363,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:51:12.973847,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:51:29.035906,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:51:43.977789,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:52:13.139458,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/ddff2f24-cf1f-44b9-ae8c-9b37bf417a3b.mp3, Size: 240343 bytes"
+2025-06-16T14:52:13.139777,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:52:13.139884,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/ddff2f24-cf1f-44b9-ae8c-9b37bf417a3b.mp3, Error: Direct processing failed: local variable 'os' referenced before assignment"
+2025-06-16T14:52:46.333529,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/ab7fa3a3-624b-4d9f-a693-864bbea4d016.mp3, Size: 240343 bytes"
+2025-06-16T14:52:46.333859,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:52:46.333959,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/ab7fa3a3-624b-4d9f-a693-864bbea4d016.mp3, Error: Direct processing failed: local variable 'os' referenced before assignment"
+2025-06-16T14:57:41.631760,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T14:58:05.178946,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/aa89e845-83b0-4d02-ae24-ea765824a7e5.mp3, Size: 240343 bytes"
+2025-06-16T14:58:05.179302,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T14:58:05.179433,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/aa89e845-83b0-4d02-ae24-ea765824a7e5.mp3, Error: Direct processing failed: local variable 'os' referenced before assignment"
+2025-06-16T15:01:30.527235,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:02:47.517016,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:02:50.007869,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:03:06.571196,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:03:07.614943,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:03:24.261792,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:03:44.798363,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/f0f403bb-5d43-410d-a0ed-20a3640a32db.mp3, Size: 240343 bytes"
+2025-06-16T15:03:44.798660,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:03:44.798792,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/f0f403bb-5d43-410d-a0ed-20a3640a32db.mp3, Error: Direct processing failed: local variable 'os' referenced before assignment"
+2025-06-16T15:04:11.732864,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:04:29.327870,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/eb2d7102-3263-4933-aa51-959be01bbd0e.mp3, Size: 2508634 bytes"
+2025-06-16T15:04:29.328204,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:04:29.328617,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/eb2d7102-3263-4933-aa51-959be01bbd0e.mp3, Error: Direct processing failed: local variable 'os' referenced before assignment"
+2025-06-16T15:05:44.765505,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:05:49.351183,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:06:07.494103,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:06:08.795622,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:06:21.839996,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:06:44.415730,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/c7622af7-01bc-48ca-8d61-e0a91a54b528.mp3, Size: 240343 bytes"
+2025-06-16T15:06:44.416121,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:06:44.522253,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T15:06:47.317396,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/c7622af7-01bc-48ca-8d61-e0a91a54b528.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T15:07:44.673669,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:00.577646,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:01.485127,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:18.950802,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:19.880802,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:38.660201,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:40.371699,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:08:58.843391,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:09:06.365564,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/bad4285b-2aec-4895-897d-942b6ebafee2.mp3, Size: 240343 bytes"
+2025-06-16T15:09:06.365975,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:09:06.499181,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T15:09:09.203819,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/bad4285b-2aec-4895-897d-942b6ebafee2.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T15:09:34.632762,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/2b2a0ede-6566-422b-8c4e-47fd225631c8.mp3, Size: 143040 bytes"
+2025-06-16T15:09:34.633059,PROCESSING_MODE,DIRECT,"File size 143040 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:09:34.740702,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (572160,)"
+2025-06-16T15:09:37.348057,TRANSCRIBE_FAILURE,ERROR,"File: temp_audio/2b2a0ede-6566-422b-8c4e-47fd225631c8.mp3, Error: Direct processing failed: 'NoneType' object has no attribute 'shape'"
+2025-06-16T15:11:31.539557,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:12:36.553373,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:12:37.965569,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:12:52.270358,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T15:13:13.833927,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/fdd258e6-4b23-4855-83e4-79650e22d073.mp3, Size: 240343 bytes"
+2025-06-16T15:13:13.834210,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:13:13.963064,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T15:13:40.038384,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/fdd258e6-4b23-4855-83e4-79650e22d073.mp3, Text preview: มาเล่นบาคาร่าออนไลน์กันเถอะ ได้เงินง่ายๆเว็บคาซิโนที่ดีที่สุด สมัครวันนี้รับโบนัสพันบาทหวยออนไลน์ซื้อง่ายจ่ายจริง บาทละ 900สล็อตแตกง่าย แจ็คพอตใหญ่ เล่นได้ทุกที่พนันบอนออนไลน์ราคาสูง ฝากถอนโอ้นเร็วโคร..."
+2025-06-16T15:14:51.210954,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/38a240a7-aab8-4572-8f7d-be1ef75da77c.mp3, Size: 6727872 bytes"
+2025-06-16T15:14:51.216085,PROCESSING_MODE,DIRECT,"File size 6727872 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:14:51.299343,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (4886016,)"
+2025-06-16T15:19:16.702414,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/38a240a7-aab8-4572-8f7d-be1ef75da77c.mp3, Text preview: สนใจ ติดต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยาลัยกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFN 89.5 Mhzส่งกรจายเสียง จากถนนริพาวดีรังสิทธิ์เครดินแดง..."
+2025-06-16T15:54:32.271674,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/84a750fb-071d-4e0d-aaac-cf7b9b8979cc.mp3, Size: 2508634 bytes"
+2025-06-16T15:54:32.274913,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:54:32.327207,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (2507707,)"
+2025-06-16T15:56:26.300569,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/84a750fb-071d-4e0d-aaac-cf7b9b8979cc.mp3, Text preview: ไม่ว่าคุณจะทำอาชีพอะไร ก็รับโบนัสครั้งแรกไปเลย 50%ไม่ว่าคุณจะเป็นใคร ก็รวยได้ง่ายๆแค่คุณชวนเพื่อนมาเล่น ก็รับโบนัสเพิ่ม 0.6%แค่คุณจะเป็นใคร ก็รับโบนัสเพิ่ม 0.6%เพราะเราคือทีมเดียวกันวันเกิด ก็รับไปเลย..."
+2025-06-16T15:56:57.625771,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/2584c59d-d178-45c5-8c80-a0bb58d093ce.mp3, Size: 6727872 bytes"
+2025-06-16T15:56:57.626699,PROCESSING_MODE,DIRECT,"File size 6727872 bytes <= 20971520 bytes, direct processing"
+2025-06-16T15:56:57.711752,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (4886016,)"
+2025-06-16T16:01:22.745174,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/2584c59d-d178-45c5-8c80-a0bb58d093ce.mp3, Text preview: สนใจ ติดต่อมาที่เบอร์ 081-333-6857มาเป็นทีมเดียวกันกับ 89.5 Innovation for Lifeที่นี่ สถานีวิทยาลัยกรจายเสียงมหาวิทยาลัยเทคโนโลยีราชมงคล ธัญบุรีFN 89.5 Mhzส่งกรจายเสียง จากถนนริพาวดีรังสิทธิ์เครดินแดง..."
+2025-06-16T16:04:15.068335,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/fd41c4bd-9be6-4a5e-b518-80aaba7857a7.mp3, Size: 2508634 bytes"
+2025-06-16T16:04:15.072378,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T16:04:15.128119,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (2507707,)"
+2025-06-16T16:05:02.225320,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:05:53.861672,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:06:24.808379,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:06:27.642803,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/fd41c4bd-9be6-4a5e-b518-80aaba7857a7.mp3, Text preview: ไม่ว่าคุณจะทำอาชีพอะไร ก็รับโบนัสครั้งแรกไปเลย 50%ไม่ว่าคุณจะเป็นใคร ก็รวยได้ง่ายๆแค่คุณชวนเพื่อนมาเล่น ก็รับโบนัสเพิ่ม 0.6%แค่คุณจะเป็นใคร ก็รับโบนัสเพิ่ม 0.6%เพราะเราคือทีมเดียวกันวันเกิด ก็รับไปเลย..."
+2025-06-16T16:07:37.604827,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:08:34.526092,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:09:00.989006,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:09:41.052761,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/be111ea7-810f-40cf-8225-c37572a36efe.mp3, Size: 2508634 bytes"
+2025-06-16T16:09:41.053102,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T16:09:41.127344,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (2507707,)"
+2025-06-16T16:12:58.374517,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:13:04.794811,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:15:13.308824,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/f891cc78-5aaa-49cb-9263-f2868f5b94ba.mp3, Size: 2508634 bytes"
+2025-06-16T16:15:13.312205,PROCESSING_MODE,DIRECT,"File size 2508634 bytes <= 20971520 bytes, direct processing"
+2025-06-16T16:15:13.377756,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (2507707,)"
+2025-06-16T16:16:40.606532,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:16:42.457556,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.

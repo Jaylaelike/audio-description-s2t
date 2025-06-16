@@ -1,109 +1,96 @@
+"""
+Direct transcription API service - for immediate processing without queuing
+This service handles direct transcription requests synchronously.
+"""
 from fastapi import FastAPI, File, UploadFile, HTTPException
-import whisper_timestamped as whisper
-import shutil
+from fastapi.middleware.cors import CORSMiddleware
+import tempfile
 import os
-import json
-from fastapi.responses import JSONResponse
-import csv # Added for CSV logging
-from datetime import datetime # Added for timestamping
+from typing import Optional, Dict, Any
+from datetime import datetime
 
-LOG_FILE_PATH = "event_log.csv"
-LOG_HEADER = ["timestamp", "event_type", "status", "details"]
-
-def log_event(event_type: str, status: str, details: str):
-    """Appends an event to the CSV log file."""
-    timestamp = datetime.now().isoformat()
-    log_entry = {"timestamp": timestamp, "event_type": event_type, "status": status, "details": details}
-    
-    file_exists = os.path.isfile(LOG_FILE_PATH)
-    
-    try:
-        with open(LOG_FILE_PATH, 'a', newline='', encoding='utf-8') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=LOG_HEADER)
-            if not file_exists or os.path.getsize(LOG_FILE_PATH) == 0:
-                writer.writeheader()
-            writer.writerow(log_entry)
-    except Exception as e:
-        print(f"Failed to write to log file {LOG_FILE_PATH}: {e}")
+# Import the separated transcription service
+from transcription_service import TranscriptionService
 
 app = FastAPI(
-    title="ThaiPbs Transcription API",
-    description="API for transcribing audio files using Speech Recognition.",
-    version="0.1.0",
+    title="Direct Transcription API",
+    description="Direct API for transcribing audio files without queue processing",
+    version="1.0.0",
 )
 
-# Load the Whisper model (consider moving this to a startup event for efficiency)
-# For now, loading it here for simplicity.
-# Ensure the model name 'turbo' is correct and available.
-try:
-    model = whisper.load_model("large", device="cpu") # Using "turbo" model for broader compatibility
-    log_event("MODEL_LOAD", "SUCCESS", "Whisper model 'turbo' loaded successfully.")
-except Exception as e:
-    error_message = f"Error loading Whisper model: {e}"
-    print(error_message)
-    log_event("MODEL_LOAD", "FAILURE", error_message)
-    model = None
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Configure this properly for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Define a Pydantic model for the response if needed, or use dict for simplicity
-# For now, we'll return the raw JSON from whisper
+# Initialize transcription service
+transcription_service = TranscriptionService()
 
 @app.post("/transcribe/", 
-          summary="Transcribe audio file",
-          description="Upload an audio file (e.g., MP3, WAV) to get its transcription with timestamps.",
-          response_description="Transcription result in JSON format, including segments and words with timestamps."
+          summary="Direct transcribe audio file",
+          description="Upload an audio file to get its transcription immediately. Files >20MB are automatically chunked.",
+          response_description="Transcription result in JSON format with segments and word-level timestamps."
 )
-async def transcribe_audio(file: UploadFile = File(..., description="Audio file to transcribe.")):
-    if not model:
-        log_event("TRANSCRIBE_REQUEST", "FAILURE", "Model not available.")
-        raise HTTPException(status_code=503, detail="Whisper model is not available.")
+async def transcribe_audio(
+    file: UploadFile = File(..., description="Audio file to transcribe."),
+    language: Optional[str] = "th"
+):
+    """Direct transcription endpoint - processes immediately without queuing"""
+    if not transcription_service.model:
+        raise HTTPException(status_code=503, detail="Transcription service is not available.")
 
     if not file.filename:
-        log_event("TRANSCRIBE_REQUEST", "FAILURE", "No filename provided.")
         raise HTTPException(status_code=400, detail="No file provided.")
 
-    log_event("TRANSCRIBE_REQUEST", "RECEIVED", f"File: {file.filename}, Content-Type: {file.content_type}")
-    # Define a temporary path to save the uploaded file
-    temp_file_path = f"temp_{file.filename}"
+    # Read file content
+    content = await file.read()
+    file_size = len(content)
+    
+    print(f"Processing file: {file.filename}, Size: {file_size} bytes")
+    
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_file_path = os.path.join(temp_dir, file.filename)
+        
+        try:
+            # Save uploaded file
+            with open(temp_file_path, "wb") as buffer:
+                buffer.write(content)
+            
+            # Process with transcription service
+            result = transcription_service.transcribe_audio(temp_file_path, language)
+            
+            print(f"Transcription completed for: {file.filename}")
+            return result
+            
+        except Exception as e:
+            print(f"Error processing {file.filename}: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Error during transcription: {str(e)}")
 
-    try:
-        # Save the uploaded file temporarily
-        with open(temp_file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-
-        # Load audio from the temporary file
-        audio = whisper.load_audio(temp_file_path)
-
-        # Transcribe
-        # You might want to expose language or other parameters in the API
-        result = whisper.transcribe(model, audio, language="th") # Assuming Thai, make this configurable if needed
-        log_event("TRANSCRIBE_SUCCESS", "SUCCESS", f"File: {file.filename}")
-
-        # Log the transcription result data
-        transcribed_text_snippet = result.get("text", "")[:200] # Get first 200 chars
-        log_event("TRANSCRIPTION_DATA", "LOGGED", f"File: {file.filename}, Text Snippet: {transcribed_text_snippet}...")
-
-        # Return the transcription result
-        # FastAPI will automatically convert dict to JSONResponse
-        return result
-
-    except HTTPException as http_exc: # Catch HTTPExceptions explicitly to log them before re-raising
-        log_event("TRANSCRIBE_FAILURE", "HTTP_ERROR", f"File: {file.filename}, Detail: {http_exc.detail}, Status Code: {http_exc.status_code}")
-        raise http_exc
-    except Exception as e:
-        log_event("TRANSCRIBE_FAILURE", "ERROR", f"File: {file.filename}, Error: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error during transcription: {str(e)}")
-    finally:
-        # Clean up the temporary file
-        if os.path.exists(temp_file_path):
-            os.remove(temp_file_path)
-
-@app.get("/health", summary="Health Check", description="Check if the API is running.")
+@app.get("/health")
 async def health_check():
-    status_detail = "Model loaded" if model is not None else "Model not loaded"
-    log_event("HEALTH_CHECK", "SUCCESS", status_detail)
-    return {"status": "ok", "model_loaded": model is not None}
+    """Health check endpoint"""
+    model_info = transcription_service.get_model_info()
+    return {
+        "status": "healthy" if model_info["model_loaded"] else "unhealthy",
+        "service": "direct_transcription",
+        "timestamp": datetime.now().isoformat(),
+        **model_info
+    }
 
-# To run this app:
-# 1. Install uvicorn: pip install uvicorn
-# 2. Run in terminal: uvicorn main:app --reload
-# 3. Access API docs at http://127.0.0.1:8000/docs or http://127.0.0.1:8000/redoc
+@app.get("/config")
+async def get_config():
+    """Get service configuration"""
+    model_info = transcription_service.get_model_info()
+    return {
+        "service_type": "direct",
+        "description": "Direct transcription without queuing",
+        **model_info
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)  # Different port from queue service

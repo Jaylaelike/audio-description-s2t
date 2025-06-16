@@ -4,16 +4,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
-import { Noto_Sans_Thai } from "next/font/google"; // Import the font
+import { Kanit } from "next/font/google";
 import { Providers } from "@/lib/providers";
+import { LoadingProvider } from "@/contexts/loading-context";
+import { AppWithSplash } from "@/components/app-with-splash";
 const inter = Inter({ subsets: ["latin"] });
 
-// Configure the font
-const notoSansThai = Noto_Sans_Thai({
-  subsets: ["thai", "latin"], // IMPORTANT: Include 'thai' subset
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Specify weights you need
-  variable: "--font-noto-sans-thai", // Optional: for CSS variable usage
-  display: "swap", // Recommended for performance
+// Configure Google font Kanit for Thai
+const kanit = Kanit({
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "600", "700"], // common weights
+  variable: "--font-kanit",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,17 +31,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={notoSansThai.className}>
+      <body className={kanit.className}>
         <Providers>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Navbar />
-            <main className="container mx-auto py-6 px-4">{children}</main>
-          </ThemeProvider>
+          <LoadingProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <AppWithSplash>
+                <Navbar />
+                <main className="container mx-auto py-6 px-4">{children}</main>
+              </AppWithSplash>
+            </ThemeProvider>
+          </LoadingProvider>
         </Providers>
       </body>
     </html>

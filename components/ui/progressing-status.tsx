@@ -2,20 +2,54 @@
 
 import { useEffect, useState } from "react"
 import { Badge } from "@/components/ui/badge"
-import { Loader2 } from "lucide-react"
+import { Loader2, Clock, CheckCircle, XCircle } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
+import { useTranscriptionQueue } from "@/hooks/use-transcription-queue"
 
 interface ProcessingStatusProps {
   status: string
   jobId: string
+  enableRealTimeUpdates?: boolean
 }
 
-export function ProcessingStatus({ status, jobId }: ProcessingStatusProps) {
+export function ProcessingStatus({ status, jobId, enableRealTimeUpdates = false }: ProcessingStatusProps) {
   const [progress, setProgress] = useState(0)
   const [currentStatus, setCurrentStatus] = useState(status)
+  const [queuePosition, setQueuePosition] = useState<number | null>(null)
+  const [taskId, setTaskId] = useState<string | null>(null)
 
-  // Simulate progress for pending/processing statuses
+  // Use WebSocket for real-time updates if enabled
+  const { isConnected, lastUpdate, error } = useTranscriptionQueue({
+    taskId: enableRealTimeUpdates ? (taskId || undefined) : undefined,
+    onStatusChange: (update) => {
+      setCurrentStatus(update.status)
+      setProgress(update.progress * 100)
+    }
+  })
+
+  // Fetch queue status for processing jobs
   useEffect(() => {
+    if (currentStatus === "processing" && enableRealTimeUpdates) {
+      // In a real implementation, you would get the taskId from the job creation response
+      // For now, we'll simulate or fetch it from an API
+      fetchTaskId()
+    }
+  }, [currentStatus, enableRealTimeUpdates])
+
+  const fetchTaskId = async () => {
+    try {
+      // This would be an API call to get the taskId associated with the jobId
+      // For now, we'll use jobId as taskId (you'll need to modify based on your actual implementation)
+      setTaskId(jobId)
+    } catch (error) {
+      console.error('Error fetching task ID:', error)
+    }
+  }
+
+  // Fallback progress simulation for non-real-time mode
+  useEffect(() => {
+    if (enableRealTimeUpdates && lastUpdate) return // Use real-time data when available
+
     if (currentStatus !== "pending" && currentStatus !== "processing") return
 
     // Start with different progress based on status
@@ -39,10 +73,9 @@ export function ProcessingStatus({ status, jobId }: ProcessingStatusProps) {
     }, 800)
 
     return () => clearInterval(interval)
-  }, [currentStatus])
+  }, [currentStatus, enableRealTimeUpdates, lastUpdate])
 
-  // In a real app, you would poll the server for status updates
-  // This is just a simulation for the UI
+  // Update status when prop changes
   useEffect(() => {
     setCurrentStatus(status)
     if (status === "completed") {
@@ -51,6 +84,51 @@ export function ProcessingStatus({ status, jobId }: ProcessingStatusProps) {
       setProgress(0)
     }
   }, [status])
+
+  const getStatusBadge = () => {
+    const commonClasses = "gap-2"
+    
+    switch (currentStatus) {
+      case "pending":
+        return (
+          <Badge variant="outline" className={commonClasses}>
+            <Clock className="h-3 w-3" />
+            Queued
+            {queuePosition && ` (Position: ${queuePosition})`}
+          </Badge>
+        )
+      case "processing":
+        return (
+          <Badge variant="secondary" className={commonClasses}>
+            <Loader2 className="h-3 w-3 animate-spin" />
+            Processing
+            {enableRealTimeUpdates && isConnected && (
+              <span className="text-xs">• Live</span>
+            )}
+          </Badge>
+        )
+      case "completed":
+        return (
+          <Badge variant="default" className={commonClasses}>
+            <CheckCircle className="h-3 w-3" />
+            Completed
+          </Badge>
+        )
+      case "failed":
+        return (
+          <Badge variant="destructive" className={commonClasses}>
+            <XCircle className="h-3 w-3" />
+            Failed
+          </Badge>
+        )
+      default:
+        return (
+          <Badge variant="outline" className={commonClasses}>
+            Unknown
+          </Badge>
+        )
+    }
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -68,18 +146,22 @@ export function ProcessingStatus({ status, jobId }: ProcessingStatusProps) {
   }
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <Badge variant={getStatusColor(currentStatus)}>
-          {currentStatus === "pending" || currentStatus === "processing" ? (
-            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-          ) : null}
-          {currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1)}
-        </Badge>
-      </div>
-
+    <div className="flex flex-col space-y-2">
+      {getStatusBadge()}
+      
       {(currentStatus === "pending" || currentStatus === "processing") && (
-        <Progress value={progress} className="h-1.5 w-full" />
+        <div className="w-full">
+          <Progress value={progress} className="h-2" />
+          <div className="flex justify-between text-xs text-muted-foreground mt-1">
+            <span>{Math.round(progress)}% complete</span>
+            {enableRealTimeUpdates && lastUpdate && (
+              <span className="thai-text">{lastUpdate.message}</span>
+            )}
+            {error && (
+              <span className="text-red-500">Connection Error</span>
+            )}
+          </div>
+        </div>
       )}
     </div>
   )
