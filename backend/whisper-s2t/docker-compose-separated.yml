@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  # Redis for queue storage
+  redis:
+    image: redis:7-alpine
+    container_name: audio-transcription-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Queue HTTP API Service
+  queue-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: audio-transcription-queue-api
+    ports:
+      - "8002:8002"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./temp_audio:/app/temp_audio
+      - ./queue_backup.pkl:/app/queue_backup.pkl
+    command: python queue_http_api.py --host 0.0.0.0 --port 8002 --redis-url redis://redis:6379
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Queue Worker Service
+  queue-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: audio-transcription-queue-worker
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+      queue-api:
+        condition: service_healthy
+    volumes:
+      - ./temp_audio:/app/temp_audio
+      - ./models:/app/models  # For Whisper models
+    command: python queue_worker.py --redis-url redis://redis:6379 --worker-id worker-docker-1
+    restart: unless-stopped
+    deploy:
+      replicas: 2  # Run 2 worker instances for parallel processing
+
+  # Main API Service
+  main-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: audio-transcription-main-api
+    ports:
+      - "8000:8000"
+    environment:
+      - QUEUE_SERVICE_URL=http://queue-api:8002
+    depends_on:
+      queue-api:
+        condition: service_healthy
+    volumes:
+      - ./temp_audio:/app/temp_audio
+    command: python main_separated.py --host 0.0.0.0 --port 8000 --queue-url http://queue-api:8002
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Queue Monitor (optional - for debugging)
+  queue-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: audio-transcription-queue-monitor
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: python queue_monitor.py --redis-url redis://redis:6379 watch --interval 10
+    restart: "no"  # Only run when needed
+    profiles:
+      - monitoring
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  default:
+    name: audio-transcription-network

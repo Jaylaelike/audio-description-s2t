@@ -1,0 +1,360 @@
+2025-06-16 16:53:53,652 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 16:53:53,652 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 16:53:53,664 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 16:53:53,664 - queue_service - INFO - No backup file found
+2025-06-16 16:53:53,664 - queue_service - INFO - Queue service initialized
+2025-06-16 16:53:53,664 - __main__ - INFO - Queue HTTP API started
+2025-06-16 16:53:57,430 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 16:53:57,430 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 16:53:57,430 - queue_service - INFO - No backup file found
+2025-06-16 16:53:57,430 - queue_service - INFO - No backup file found
+2025-06-16 16:53:57,430 - queue_service - INFO - Queue service initialized
+2025-06-16 16:53:57,430 - queue_service - INFO - Queue service initialized
+2025-06-16 16:54:25,781 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 16:54:25,786 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 16:54:25,786 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 16:54:25,786 - __main__ - INFO - Poll interval: 1s
+2025-06-16 16:54:25,786 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 16:54:25,799 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 16:54:25,802 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 16:54:25,802 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 16:54:25,803 - __main__ - INFO - Poll interval: 1s
+2025-06-16 16:54:25,803 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 16:55:56,952 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 16:55:56,952 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 16:55:56,952 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 16:55:56,966 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 16:55:56,966 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 16:55:57,014 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 16:55:57,014 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 16:57:15,452 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 16:57:15,452 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 16:57:15,460 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 16:57:15,462 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T16:55:56.953580
+2025-06-16 16:57:15,462 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 16:57:15,462 - queue_service - INFO - Queue service initialized
+2025-06-16 16:57:15,462 - __main__ - INFO - Queue HTTP API started
+2025-06-16 16:57:19,228 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 16:57:19,228 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 16:57:19,228 - queue_service - INFO - No backup file found
+2025-06-16 16:57:19,228 - queue_service - INFO - No backup file found
+2025-06-16 16:57:19,228 - queue_service - INFO - Queue service initialized
+2025-06-16 16:57:19,228 - queue_service - INFO - Queue service initialized
+2025-06-16 16:57:42,870 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 16:57:42,874 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 16:57:42,874 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 16:57:42,874 - __main__ - INFO - Poll interval: 1s
+2025-06-16 16:57:42,874 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 16:57:42,876 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 16:57:42,879 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 16:57:42,879 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 16:57:42,879 - __main__ - INFO - Poll interval: 1s
+2025-06-16 16:57:42,879 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 16:57:49,384 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 16:57:49,384 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 16:57:49,384 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 16:57:49,401 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 16:57:49,401 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 16:57:49,690 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 16:57:49,902 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 16:57:49,902 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:00:12,354 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:00:12,354 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:00:12,362 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:00:12,364 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T16:57:49.386453
+2025-06-16 17:00:12,364 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:00:12,364 - queue_service - INFO - Queue service initialized
+2025-06-16 17:00:12,364 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:00:16,154 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:00:16,154 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:00:16,154 - queue_service - INFO - No backup file found
+2025-06-16 17:00:16,154 - queue_service - INFO - No backup file found
+2025-06-16 17:00:16,154 - queue_service - INFO - Queue service initialized
+2025-06-16 17:00:16,154 - queue_service - INFO - Queue service initialized
+2025-06-16 17:00:29,736 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:00:29,729 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:00:29,762 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:00:29,868 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:00:29,868 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:00:29,869 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:00:29,869 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:00:29,869 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:00:29,869 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:01:01,941 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:01:01,941 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:01:01,950 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:01:01,951 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:00:29.808685
+2025-06-16 17:01:01,951 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:01:01,951 - queue_service - INFO - Queue service initialized
+2025-06-16 17:01:01,951 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:01:05,671 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:01:05,671 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:01:05,671 - queue_service - INFO - No backup file found
+2025-06-16 17:01:05,671 - queue_service - INFO - No backup file found
+2025-06-16 17:01:05,671 - queue_service - INFO - Queue service initialized
+2025-06-16 17:01:05,671 - queue_service - INFO - Queue service initialized
+2025-06-16 17:01:19,448 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:01:19,449 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:01:19,449 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:01:19,449 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:01:19,449 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:01:19,455 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 17:01:19,455 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:01:19,455 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 17:01:19,455 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:01:19,456 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 17:01:44,882 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:01:44,882 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:01:44,885 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:01:44,897 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:01:44,897 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:01:45,037 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:01:45,037 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:01:45,042 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 17:01:45,186 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:01:45,186 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:01:45,186 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 17:01:45,500 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:01:45,503 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 17:02:10,297 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:02:10,297 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:02:10,305 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:02:10,306 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:01:44.892225
+2025-06-16 17:02:10,306 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:02:10,306 - queue_service - INFO - Queue service initialized
+2025-06-16 17:02:10,306 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:02:14,023 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:02:14,023 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:02:14,023 - queue_service - INFO - No backup file found
+2025-06-16 17:02:14,023 - queue_service - INFO - No backup file found
+2025-06-16 17:02:14,023 - queue_service - INFO - Queue service initialized
+2025-06-16 17:02:14,023 - queue_service - INFO - Queue service initialized
+2025-06-16 17:02:29,888 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 17:02:29,891 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:02:29,891 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 17:02:29,891 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:02:29,892 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 17:02:29,891 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:02:29,894 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:02:29,894 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:02:29,894 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:02:29,894 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:08:57,667 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:08:57,667 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:08:57,667 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:08:57,671 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:08:57,672 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:08:57,975 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 17:08:58,627 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:08:58,627 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 17:09:15,623 - queue_client - ERROR - Queue service connection error: Cannot connect to host localhost:8002 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 8002, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 8002)]
+2025-06-16 17:09:15,623 - queue_client - ERROR - Queue service connection error: Cannot connect to host localhost:8002 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 8002, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 8002)]
+2025-06-16 17:09:15,629 - queue_client - ERROR - Queue service connection error: Cannot connect to host localhost:8002 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 8002, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 8002)]
+2025-06-16 17:09:15,630 - queue_client - ERROR - Queue service connection error: Cannot connect to host localhost:8002 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 8002, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 8002)]
+2025-06-16 17:09:24,854 - queue_client - ERROR - Queue service connection error: Cannot connect to host localhost:8002 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 8002, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 8002)]
+2025-06-16 17:10:27,789 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:10:27,789 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:10:27,796 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:10:27,797 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:08:57.668879
+2025-06-16 17:10:27,797 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:10:27,797 - queue_service - INFO - Queue service initialized
+2025-06-16 17:10:27,797 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:10:44,873 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:10:44,873 - queue_service - INFO - No backup file found
+2025-06-16 17:10:44,873 - queue_service - INFO - Queue service initialized
+2025-06-16 17:10:51,820 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:10:51,824 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:10:51,824 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:10:51,824 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:10:51,824 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:12:22,730 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:12:22,984 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:12:23,774 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:12:23,780 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:12:23,780 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:12:34,473 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:12:34,473 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:12:34,482 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:12:34,483 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:12:23.775307
+2025-06-16 17:12:34,483 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:12:34,483 - queue_service - INFO - Queue service initialized
+2025-06-16 17:12:34,483 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:12:38,220 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:12:38,220 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:12:38,220 - queue_service - INFO - No backup file found
+2025-06-16 17:12:38,220 - queue_service - INFO - No backup file found
+2025-06-16 17:12:38,220 - queue_service - INFO - Queue service initialized
+2025-06-16 17:12:38,220 - queue_service - INFO - Queue service initialized
+2025-06-16 17:13:06,896 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:13:06,901 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:13:06,901 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:13:06,897 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 17:13:06,901 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:13:06,901 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:13:06,901 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:13:06,901 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 17:13:06,901 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:13:06,901 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 17:23:02,637 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:23:02,636 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:23:02,637 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:23:02,659 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:23:02,659 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:23:02,896 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 17:23:03,593 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 17:23:03,593 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:23:08,841 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:23:08,841 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:23:08,849 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:23:08,851 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:23:02.639771
+2025-06-16 17:23:08,851 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:23:08,851 - queue_service - INFO - Queue service initialized
+2025-06-16 17:23:08,851 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:23:12,897 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:23:12,897 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:23:12,897 - queue_service - INFO - No backup file found
+2025-06-16 17:23:12,897 - queue_service - INFO - No backup file found
+2025-06-16 17:23:12,897 - queue_service - INFO - Queue service initialized
+2025-06-16 17:23:12,897 - queue_service - INFO - Queue service initialized
+2025-06-16 17:23:43,730 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 17:23:43,733 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:23:43,733 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 17:23:43,733 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:23:43,734 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 17:23:43,741 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:23:43,744 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:23:43,744 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:23:43,744 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:23:43,744 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:28:18,773 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:28:18,773 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:28:18,773 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:28:18,777 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:28:18,777 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:28:19,027 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 17:28:19,244 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 17:28:19,244 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:30:17,326 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:30:17,326 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:30:17,337 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:30:17,338 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:28:18.774746
+2025-06-16 17:30:17,338 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:30:17,338 - queue_service - INFO - Queue service initialized
+2025-06-16 17:30:17,338 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:30:21,845 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:30:21,845 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:30:21,845 - queue_service - INFO - No backup file found
+2025-06-16 17:30:21,845 - queue_service - INFO - Queue service initialized
+2025-06-16 17:30:21,845 - queue_service - INFO - No backup file found
+2025-06-16 17:30:21,845 - queue_service - INFO - Queue service initialized
+2025-06-16 17:30:46,210 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 17:30:46,217 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:30:46,217 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 17:30:46,217 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:30:46,217 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 17:30:47,159 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:30:47,169 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:30:47,169 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:30:47,169 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:30:47,169 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:31:21,472 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:31:21,472 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:31:21,472 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:31:21,478 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:31:21,478 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:31:21,538 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 17:31:22,017 - __main__ - INFO - Worker worker-1 received signal 15, shutting down...
+2025-06-16 17:31:22,256 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:31:26,747 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:31:26,747 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:31:26,756 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:31:26,757 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:31:21.473928
+2025-06-16 17:31:26,757 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:31:26,757 - queue_service - INFO - Queue service initialized
+2025-06-16 17:31:26,757 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:31:30,609 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:31:30,609 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:31:30,609 - queue_service - INFO - No backup file found
+2025-06-16 17:31:30,609 - queue_service - INFO - No backup file found
+2025-06-16 17:31:30,609 - queue_service - INFO - Queue service initialized
+2025-06-16 17:31:30,609 - queue_service - INFO - Queue service initialized
+2025-06-16 17:31:57,538 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:31:57,540 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:31:57,540 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:31:57,541 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:31:57,541 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:31:57,541 - __main__ - INFO - Worker worker-2 initialized
+2025-06-16 17:31:57,544 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:31:57,544 - __main__ - INFO - Worker ID: worker-2
+2025-06-16 17:31:57,544 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:31:57,544 - __main__ - INFO - Worker worker-2 starting...
+2025-06-16 17:33:38,085 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:33:38,085 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:33:38,085 - __main__ - INFO - Worker worker-2 received signal 2, shutting down...
+2025-06-16 17:33:38,089 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:33:38,089 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:33:38,332 - __main__ - INFO - Worker worker-2 received signal 15, shutting down...
+2025-06-16 17:33:38,916 - __main__ - INFO - Worker worker-2 stopped
+2025-06-16 17:33:38,916 - __main__ - INFO - Worker worker-1 stopped
+2025-06-16 17:39:03,784 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-16 17:39:03,784 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-16 17:39:03,792 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:39:03,793 - queue_service - INFO - Backup restored: 0 tasks from 2025-06-16T17:33:38.086688
+2025-06-16 17:39:03,793 - queue_service - INFO - Backup file removed after successful restore
+2025-06-16 17:39:03,793 - queue_service - INFO - Queue service initialized
+2025-06-16 17:39:03,793 - __main__ - INFO - Queue HTTP API started
+2025-06-16 17:39:07,466 - queue_service - INFO - Connected to Redis successfully
+2025-06-16 17:39:07,466 - queue_service - INFO - No backup file found
+2025-06-16 17:39:07,466 - queue_service - INFO - Queue service initialized
+2025-06-16 17:39:15,245 - __main__ - INFO - Worker worker-1 initialized
+2025-06-16 17:39:15,245 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-16 17:39:15,245 - __main__ - INFO - Worker ID: worker-1
+2025-06-16 17:39:15,245 - __main__ - INFO - Poll interval: 1s
+2025-06-16 17:39:15,245 - __main__ - INFO - Worker worker-1 starting...
+2025-06-16 17:39:50,868 - __main__ - INFO - Worker worker-1 received signal 2, shutting down...
+2025-06-16 17:39:50,868 - queue_service - INFO - Received signal 2, performing graceful shutdown...
+2025-06-16 17:39:50,872 - queue_service - INFO - Backup saved to queue_backup.pkl
+2025-06-16 17:39:50,872 - queue_service - INFO - Graceful shutdown complete
+2025-06-16 17:39:51,105 - __main__ - INFO - Worker worker-1 received signal 15, shutting down...
+2025-06-16 17:39:51,314 - __main__ - INFO - Worker worker-1 stopped
+2025-06-17 09:00:20,886 - __main__ - INFO - Starting Queue HTTP API on 0.0.0.0:8002
+2025-06-17 09:00:20,887 - __main__ - INFO - Redis URL: redis://localhost:6379
+2025-06-17 09:00:20,895 - queue_service - INFO - Connected to Redis successfully
+2025-06-17 09:00:20,895 - queue_service - INFO - No backup file found
+2025-06-17 09:00:20,895 - queue_service - INFO - Queue service initialized
+2025-06-17 09:00:20,895 - __main__ - INFO - Queue HTTP API started
+2025-06-17 09:00:24,931 - queue_service - INFO - Connected to Redis successfully
+2025-06-17 09:00:24,931 - queue_service - INFO - Connected to Redis successfully
+2025-06-17 09:00:24,931 - queue_service - INFO - No backup file found
+2025-06-17 09:00:24,931 - queue_service - INFO - No backup file found
+2025-06-17 09:00:24,931 - queue_service - INFO - Queue service initialized
+2025-06-17 09:00:24,931 - queue_service - INFO - Queue service initialized
+2025-06-17 09:00:43,783 - __main__ - INFO - Worker worker-2 initialized
+2025-06-17 09:00:43,785 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-17 09:00:43,785 - __main__ - INFO - Worker ID: worker-2
+2025-06-17 09:00:43,785 - __main__ - INFO - Poll interval: 1s
+2025-06-17 09:00:43,785 - __main__ - INFO - Worker worker-2 starting...
+2025-06-17 09:00:43,784 - __main__ - INFO - Worker worker-1 initialized
+2025-06-17 09:00:43,786 - __main__ - INFO - Starting queue worker with Redis URL: redis://localhost:6379
+2025-06-17 09:00:43,786 - __main__ - INFO - Worker ID: worker-1
+2025-06-17 09:00:43,786 - __main__ - INFO - Poll interval: 1s
+2025-06-17 09:00:43,786 - __main__ - INFO - Worker worker-1 starting...
+2025-06-17 09:11:59,294 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 (transcription) queued with priority 0
+2025-06-17 09:11:59,978 - __main__ - INFO - Worker worker-1 got task 2555d640-8de7-4ead-a430-01b648427747 of type transcription
+2025-06-17 09:11:59,978 - __main__ - INFO - Worker worker-2 got task 2555d640-8de7-4ead-a430-01b648427747 of type transcription
+2025-06-17 09:11:59,978 - __main__ - INFO - Processing transcription task: 2555d640-8de7-4ead-a430-01b648427747
+2025-06-17 09:11:59,979 - __main__ - INFO - Processing transcription task: 2555d640-8de7-4ead-a430-01b648427747
+2025-06-17 09:11:59,981 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to processing
+2025-06-17 09:11:59,981 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to processing
+2025-06-17 09:11:59,981 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to processing
+2025-06-17 09:11:59,982 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to processing
+2025-06-17 09:12:57,801 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to processing
+2025-06-17 09:12:57,802 - __main__ - INFO - Cleaned up temp file: temp_audio/2555d640-8de7-4ead-a430-01b648427747.mp3
+2025-06-17 09:12:57,900 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to completed
+2025-06-17 09:12:57,900 - __main__ - INFO - Transcription task 2555d640-8de7-4ead-a430-01b648427747 completed successfully
+2025-06-17 09:12:57,900 - __main__ - INFO - Worker worker-1 completed task 2555d640-8de7-4ead-a430-01b648427747
+2025-06-17 09:12:58,112 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to processing
+2025-06-17 09:12:58,204 - queue_service - INFO - Task 2555d640-8de7-4ead-a430-01b648427747 status updated to completed
+2025-06-17 09:12:58,204 - __main__ - INFO - Transcription task 2555d640-8de7-4ead-a430-01b648427747 completed successfully
+2025-06-17 09:12:58,204 - __main__ - INFO - Worker worker-2 completed task 2555d640-8de7-4ead-a430-01b648427747
+2025-06-17 09:13:04,605 - queue_service - INFO - Task f8134de7-02a8-43e0-94fa-4a45e43df45a (risk_detection) queued with priority 0

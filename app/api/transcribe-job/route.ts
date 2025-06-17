@@ -6,7 +6,7 @@ import { mkdir } from "fs/promises"
 import { v4 as uuidv4 } from "uuid"
 
 // Queue-based transcription service URL
-const TRANSCRIPTION_SERVICE_URL = "http://localhost:8000"
+const TRANSCRIPTION_SERVICE_URL = "http://localhost:8002"
 
 // Configure API route for long-running operations 20 minutes 
 export const maxDuration =  20 * 60 // 20 minutes in seconds
@@ -46,6 +46,8 @@ export async function POST(request: NextRequest) {
 
     const title = formData.get("title") as string
     const description = formData.get("description") as string | null
+    const language = formData.get("language") as string || "th"
+    const priority = parseInt(formData.get("priority") as string || "0")
     const audioFile = formData.get("audioFile") as File
 
     if (!title || !audioFile) {
@@ -77,10 +79,10 @@ export async function POST(request: NextRequest) {
     // Create form data for the queue-based transcription service
     const transcriptionFormData = new FormData()
     transcriptionFormData.append("file", new Blob([audioBuffer], { type: audioFile.type }), audioFile.name)
-    transcriptionFormData.append("language", "th")
+    transcriptionFormData.append("language", language)
 
-    // Process transcription asynchronously using queue
-    processTranscriptionQueue(transcriptionJob.id, transcriptionFormData).catch(error => {
+    // Process transcription asynchronously using queue with priority
+    processTranscriptionQueue(transcriptionJob.id, transcriptionFormData, priority).catch(error => {
       console.error(`Background transcription failed for job ${transcriptionJob.id}:`, error)
     })
 
@@ -99,7 +101,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function processTranscriptionQueue(transcriptionId: string, transcriptionFormData: FormData) {
+async function processTranscriptionQueue(transcriptionId: string, transcriptionFormData: FormData, priority: number = 0) {
   try {
     // Set job status to processing
     await prisma.transcriptionJob.update({
@@ -107,9 +109,13 @@ async function processTranscriptionQueue(transcriptionId: string, transcriptionF
       data: { status: "processing" },
     })
 
-    // Submit to queue-based transcription service
-    console.log(`Submitting to queue-based transcription service: ${TRANSCRIPTION_SERVICE_URL}/transcribe/`)
-    const queueResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/transcribe/`, {
+    // Submit to queue-based transcription service with priority  
+    console.log(`Submitting to queue-based transcription service: ${TRANSCRIPTION_SERVICE_URL}/tasks/transcription (priority: ${priority})`)
+    
+    // Add priority to form data
+    transcriptionFormData.append("priority", priority.toString())
+    
+    const queueResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/tasks/transcription`, {
       method: "POST",
       body: transcriptionFormData,
     })
@@ -153,7 +159,7 @@ async function pollTranscriptionCompletion(transcriptionId: string, taskId: stri
     try {
       attempts++
       
-      const statusResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/task/${taskId}`)
+      const statusResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/tasks/${taskId}`)
       
       if (!statusResponse.ok) {
         throw new Error(`Status check failed: ${statusResponse.status}`)
@@ -231,15 +237,16 @@ async function triggerAutoRiskDetection(transcriptionId: string, transcriptionRe
       }
     })
 
-    // Submit to backend risk detection queue
-    const riskDetectionResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/detect-risk/`, {
+    // Submit to backend risk detection queue with priority 0 (normal) for auto-analysis
+    const riskDetectionResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/tasks/risk-detection`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         transcription_id: transcriptionId,
-        text: text
+        text: text,
+        priority: 0
       }),
     })
 
@@ -278,7 +285,7 @@ async function pollRiskDetectionCompletion(transcriptionId: string, taskId: stri
     try {
       attempts++
       
-      const statusResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/task/${taskId}`)
+      const statusResponse = await fetch(`${TRANSCRIPTION_SERVICE_URL}/tasks/${taskId}`)
       
       if (!statusResponse.ok) {
         throw new Error(`Risk detection status check failed: ${statusResponse.status}`)

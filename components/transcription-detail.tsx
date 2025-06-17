@@ -5,9 +5,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { formatDistanceToNow, format } from "date-fns"
 import { ProcessingStatus } from "@/components/ui/progressing-status"
-import { AlertTriangle, Shield, Loader2, AlertCircle } from "lucide-react"
+import { AlertTriangle, Shield, Loader2, AlertCircle, ChevronDown, Clock, Zap } from "lucide-react"
 
 // Add custom styles for animations
 const styles = `
@@ -259,7 +260,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
   }
 
   // Handle risk detection using backend queue system
-  const handleRiskDetection = async () => {
+  const handleRiskDetection = async (priority: number = 0) => {
     if (!transcription.transcriptionResultJson) {
       setRiskAnalysisError('No transcription available for analysis')
       return
@@ -271,8 +272,8 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
     try {
       const fullText = transcription.transcriptionResultJson.text
       
-      // Submit to backend queue
-      const response = await fetch('http://localhost:8000/detect-risk/', {
+      // Submit to backend queue with priority
+      const response = await fetch(`http://localhost:8000/detect-risk/?priority=${priority}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -290,7 +291,7 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
       }
 
       const taskId = data.task_id
-      console.log(`Risk detection task queued with ID: ${taskId}`)
+      console.log(`Risk detection task queued with ID: ${taskId} (priority: ${priority})`)
 
       // Poll for completion using backend API
       await pollForBackendRiskAnalysisCompletion(taskId)
@@ -458,44 +459,86 @@ export function TranscriptionDetail({ transcription }: TranscriptionDetailProps)
               </div>
               <div className="flex items-center gap-2">
                 {(transcription.riskDetectionStatus === 'not_analyzed' || !transcription.riskDetectionStatus) && (
-                  <Button
-                    onClick={handleRiskDetection}
-                    disabled={isAnalyzingRisk}
-                    size="sm"
-                    variant="outline"
-                  >
-                    {isAnalyzingRisk ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        <span className="thai-text">กำลังวิเคราะห์...</span>
-                      </>
-                    ) : (
-                      <>
-                        <AlertTriangle className="h-4 w-4 mr-2" />
-                        <span className="thai-text">ตรวจสอบความเสี่ยง</span>
-                      </>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        disabled={isAnalyzingRisk}
+                        size="sm"
+                        variant="outline"
+                        className="gap-1"
+                      >
+                        {isAnalyzingRisk ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span className="thai-text">กำลังวิเคราะห์...</span>
+                          </>
+                        ) : (
+                          <>
+                            <AlertTriangle className="h-4 w-4" />
+                            <span className="thai-text">ตรวจสอบความเสี่ยง</span>
+                            <ChevronDown className="h-3 w-3" />
+                          </>
+                        )}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    {!isAnalyzingRisk && (
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => handleRiskDetection(0)} className="gap-2">
+                          <Clock className="h-4 w-4" />
+                          <span className="thai-text">ปกติ (Normal)</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleRiskDetection(1)} className="gap-2">
+                          <AlertTriangle className="h-4 w-4" />
+                          <span className="thai-text">สำคัญ (High)</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleRiskDetection(2)} className="gap-2">
+                          <Zap className="h-4 w-4" />
+                          <span className="thai-text">เร่งด่วน (Urgent)</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
                     )}
-                  </Button>
+                  </DropdownMenu>
                 )}
                 {(transcription.riskDetectionStatus === 'failed' || transcription.riskDetectionStatus === 'completed') && (
-                  <Button
-                    onClick={handleRiskDetection}
-                    disabled={isAnalyzingRisk}
-                    size="sm"
-                    variant="outline"
-                  >
-                    {isAnalyzingRisk ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        <span className="thai-text">กำลังวิเคราะห์...</span>
-                      </>
-                    ) : (
-                      <>
-                        <AlertCircle className="h-4 w-4 mr-2" />
-                        <span className="thai-text">{transcription.riskDetectionStatus === 'failed' ? 'ลองใหม่' : 'วิเคราะห์ใหม่'}</span>
-                      </>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        disabled={isAnalyzingRisk}
+                        size="sm"
+                        variant="outline"
+                        className="gap-1"
+                      >
+                        {isAnalyzingRisk ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span className="thai-text">กำลังวิเคราะห์...</span>
+                          </>
+                        ) : (
+                          <>
+                            <AlertCircle className="h-4 w-4" />
+                            <span className="thai-text">{transcription.riskDetectionStatus === 'failed' ? 'ลองใหม่' : 'วิเคราะห์ใหม่'}</span>
+                            <ChevronDown className="h-3 w-3" />
+                          </>
+                        )}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    {!isAnalyzingRisk && (
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => handleRiskDetection(0)} className="gap-2">
+                          <Clock className="h-4 w-4" />
+                          <span className="thai-text">ปกติ (Normal)</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleRiskDetection(1)} className="gap-2">
+                          <AlertTriangle className="h-4 w-4" />
+                          <span className="thai-text">สำคัญ (High)</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleRiskDetection(2)} className="gap-2">
+                          <Zap className="h-4 w-4" />
+                          <span className="thai-text">เร่งด่วน (Urgent)</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
                     )}
-                  </Button>
+                  </DropdownMenu>
                 )}
               </div>
             </div>

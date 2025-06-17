@@ -429,3 +429,57 @@ timestamp,event_type,status,details
 2025-06-16T16:15:13.377756,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (2507707,)"
 2025-06-16T16:16:40.606532,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
 2025-06-16T16:16:42.457556,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:54:25.770121,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:54:25.791121,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:57:42.861804,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T16:57:42.867004,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:01:19.444660,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:01:19.451420,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:02:29.878185,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:02:29.882847,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:10:51.819399,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:13:06.886970,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:13:06.887868,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:23:43.718665,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:23:43.732642,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:30:46.194769,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:30:47.142967,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:31:57.530954,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:31:57.534690,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:39:15.243616,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:40:16.310326,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:40:22.221320,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-16T17:40:27.832089,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/43f59b5c-0a40-441b-8023-8fa12cf111e0.mp3, Size: 143040 bytes"
+2025-06-16T17:40:27.832650,PROCESSING_MODE,DIRECT,"File size 143040 bytes <= 20971520 bytes, direct processing"
+2025-06-16T17:40:27.948513,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (572160,)"
+2025-06-16T17:40:54.257797,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/43f59b5c-0a40-441b-8023-8fa12cf111e0.mp3, Text preview: ประชาชนก็ ต้องเข้าใจการทํางานของรัฐบาลจะไปโทษ เขาไม่ได้ จะโทษก็โทษ ดิฉันก็โทษตรงที่ว่า ช้าไป คือปล่อยให้เขา มาเบกเขาเนี่ยเหมือนทําขนมเรียบร้อยพอเข็นออกไป ตั้งกลิ่มทางแล้วเทศกิจวิ่งมาบอกไม่ได้ ขายไม่ได..."
+2025-06-16T17:41:40.057868,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/dce0308d-3810-4e14-beaf-4d65e932dc3f.mp3, Size: 240343 bytes"
+2025-06-16T17:41:40.059460,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T17:41:40.105996,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T17:42:06.983425,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/dce0308d-3810-4e14-beaf-4d65e932dc3f.mp3, Text preview: มาเล่นบาคาร่าออนไลน์กันเถอะ ได้เงินง่ายๆเว็บคาซิโนที่ดีที่สุด สมัครวันนี้รับโบนัสพันบาทหวยออนไลน์ซื้อง่ายจ่ายจริง บาทละ 900สล็อตแตกง่าย แจ็คพอตใหญ่ เล่นได้ทุกที่พนันบอนออนไลน์ราคาสูง ฝากถอนโอ้นเร็วโคร..."
+2025-06-16T17:52:47.980820,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/5a4cd729-0422-45ee-8725-5f66c11a7e31.mp3, Size: 240343 bytes"
+2025-06-16T17:52:47.981343,PROCESSING_MODE,DIRECT,"File size 240343 bytes <= 20971520 bytes, direct processing"
+2025-06-16T17:52:48.024457,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (479632,)"
+2025-06-16T17:53:14.467440,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/5a4cd729-0422-45ee-8725-5f66c11a7e31.mp3, Text preview: มาเล่นบาคาร่าออนไลน์กันเถอะ ได้เงินง่ายๆเว็บคาซิโนที่ดีที่สุด สมัครวันนี้รับโบนัสพันบาทหวยออนไลน์ซื้อง่ายจ่ายจริง บาทละ 900สล็อตแตกง่าย แจ็คพอตใหญ่ เล่นได้ทุกที่พนันบอนออนไลน์ราคาสูง ฝากถอนโอ้นเร็วโคร..."
+2025-06-16T17:53:43.191171,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/6970e79e-d92c-4e15-b671-17abb7c85e67.mp3, Size: 143040 bytes"
+2025-06-16T17:53:43.194613,PROCESSING_MODE,DIRECT,"File size 143040 bytes <= 20971520 bytes, direct processing"
+2025-06-16T17:53:43.240016,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (572160,)"
+2025-06-16T17:54:10.799342,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/6970e79e-d92c-4e15-b671-17abb7c85e67.mp3, Text preview: ประชาชนก็ ต้องเข้าใจการทํางานของรัฐบาลจะไปโทษ เขาไม่ได้ จะโทษก็โทษ ดิฉันก็โทษตรงที่ว่า ช้าไป คือปล่อยให้เขา มาเบกเขาเนี่ยเหมือนทําขนมเรียบร้อยพอเข็นออกไป ตั้งกลิ่มทางแล้วเทศกิจวิ่งมาบอกไม่ได้ ขายไม่ได..."
+2025-06-16T17:56:18.150325,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/c588e523-a4e1-4813-aa34-1dc6002d2c95.mp3, Size: 339552 bytes"
+2025-06-16T17:56:18.154393,PROCESSING_MODE,DIRECT,"File size 339552 bytes <= 20971520 bytes, direct processing"
+2025-06-16T17:56:18.211797,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (1358208,)"
+2025-06-16T17:57:33.667417,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/c588e523-a4e1-4813-aa34-1dc6002d2c95.mp3, Text preview: ที่จะอยู่อย่างเราเกลียดทางถึงมาก็จัดให้ โจ้โจ้สั่งนะครับบรรยากาศสบายสบาย ช่วงวันพระหัดวันนี้นะครับแล้วก็ตอนนี้สิบห้านละละกาอีกสามสิบนาทีนะครับขอให้คุณฟังมีความสุข กับการฟังรายการนะครับมากมายแล้วก่อนนะ..."
+2025-06-16T17:58:04.755205,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/e2ea8e5f-d77a-4318-905a-6e30436e9c4e.mp3, Size: 143040 bytes"
+2025-06-16T17:58:04.756627,PROCESSING_MODE,DIRECT,"File size 143040 bytes <= 20971520 bytes, direct processing"
+2025-06-16T17:58:04.811652,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (572160,)"
+2025-06-16T17:58:32.449929,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/e2ea8e5f-d77a-4318-905a-6e30436e9c4e.mp3, Text preview: ประชาชนก็ ต้องเข้าใจการทํางานของรัฐบาลจะไปโทษ เขาไม่ได้ จะโทษก็โทษ ดิฉันก็โทษตรงที่ว่า ช้าไป คือปล่อยให้เขา มาเบกเขาเนี่ยเหมือนทําขนมเรียบร้อยพอเข็นออกไป ตั้งกลิ่มทางแล้วเทศกิจวิ่งมาบอกไม่ได้ ขายไม่ได..."
+2025-06-17T09:00:43.780454,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-17T09:00:43.782567,MODEL_LOAD,SUCCESS,Whisper large model loaded successfully.
+2025-06-17T09:12:00.271172,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/2555d640-8de7-4ead-a430-01b648427747.mp3, Size: 143040 bytes"
+2025-06-17T09:12:00.274610,TRANSCRIBE_REQUEST,RECEIVED,"File: temp_audio/2555d640-8de7-4ead-a430-01b648427747.mp3, Size: 143040 bytes"
+2025-06-17T09:12:00.275250,PROCESSING_MODE,DIRECT,"File size 143040 bytes <= 20971520 bytes, direct processing"
+2025-06-17T09:12:00.275455,PROCESSING_MODE,DIRECT,"File size 143040 bytes <= 20971520 bytes, direct processing"
+2025-06-17T09:12:00.326070,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (572160,)"
+2025-06-17T09:12:00.326669,AUDIO_LOAD,SUCCESS,"Loaded audio with shape: (572160,)"
+2025-06-17T09:12:57.796258,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/2555d640-8de7-4ead-a430-01b648427747.mp3, Text preview: ประชาชนก็ ต้องเข้าใจการทํางานของรัฐบาลจะไปโทษ เขาไม่ได้ จะโทษก็โทษ ดิฉันก็โทษตรงที่ว่า ช้าไป คือปล่อยให้เขา มาเบกเขาเนี่ยเหมือนทําขนมเรียบร้อยพอเข็นออกไป ตั้งกลิ่มทางแล้วเทศกิจวิ่งมาบอกไม่ได้ ขายไม่ได..."
+2025-06-17T09:12:58.110686,TRANSCRIBE_SUCCESS,SUCCESS,"File: temp_audio/2555d640-8de7-4ead-a430-01b648427747.mp3, Text preview: ประชาชนก็ ต้องเข้าใจการทํางานของรัฐบาลจะไปโทษ เขาไม่ได้ จะโทษก็โทษ ดิฉันก็โทษตรงที่ว่า ช้าไป คือปล่อยให้เขา มาเบกเขาเนี่ยเหมือนทําขนมเรียบร้อยพอเข็นออกไป ตั้งกลิ่มทางแล้วเทศกิจวิ่งมาบอกไม่ได้ ขายไม่ได..."
